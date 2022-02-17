@@ -26,7 +26,8 @@ body {
 
 .main {
   padding: 23px 30px;
-  width: 100%;
+  width: 86.8%;
+  height: 100vh;
   margin-left: 250px;
   position: absolute;
   z-index: -1;
@@ -37,4 +38,7 @@ body {
 }
 
 .card-container {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
 }
