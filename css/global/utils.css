@@ -1,0 +1,45 @@
+/* Contours */
+.gray-border {
+  border: 1px solid #999b9e;
+}
+
+/* Background colors */
+.white-bg {
+  background-origin: white;
+}
+
+.red-100-bg {
+  background-color: var(--red-100);
+}
+
+.yellow-100-bg {
+  background-color: var(--yellow-100);
+}
+
+.yellow-200-bg {
+  background-color: var(--yellow-200);
+}
+
+.green-100-bg {
+  background-color: var(--green-100);
+}
+
+.cyan-100-bg {
+  background-color: var(--cyan-100);
+}
+
+.blue-100-bg {
+  background-color: var(--blue-100);
+}
+
+.blue-200-bg {
+  background-color: var(--blue-200);
+}
+
+.purple-100-bg {
+  background-color: var(--purple-100);
+}
+
+.purple-200-bg {
+  background-color: var(--purple-200);
+}
