@@ -1,0 +1,20 @@
+.aside {
+  padding-top: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  border-right: 1px solid #fff;
+  position: fixed;
+  width: 250px;
+  height: 100%;
+  padding-left: 20px;
+  background-color: #111;
+  z-index: 1;
+}
+
+.aside-link {
+  text-decoration: none;
+  color: #fff;
+  display: flex;
+  gap: 20px;
+}
