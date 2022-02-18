@@ -42,7 +42,7 @@ const Store = (function () {
 })();
 
 
-function createCard() {
+function cardsView() {
   const renderCard = (card) => {
     return `<div class="card__content ${card.class}">
   <div class="card__text">
@@ -68,7 +68,6 @@ function createCard() {
   </div>`
   }
 
-
   const template = `${Store.cards.map(renderCard).join("")}`;
 
   return {
@@ -80,8 +79,8 @@ function createCard() {
   }
 }
 
-const Card = createCard();
-App.load(Card);
+const Cards = cardsView();
+App.load(Cards);
 
 const Module = (function() {
   const template = ``;
