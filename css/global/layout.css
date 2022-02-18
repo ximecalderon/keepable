@@ -24,7 +24,7 @@ body {
 
 .main {
   padding: 23px 30px;
-  width: calc(100vh - 280px);
+  width: calc(100vw - 280px);
   height: 100vh;
   position: absolute;
   top: 70px;
