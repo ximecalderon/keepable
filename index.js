@@ -52,6 +52,18 @@ function cardsView() {
 
   <div class="card__icon">
     <div class="card__icon--custom">
+      <section class="palette__container ds-none">
+        <div class="palette__color white-bg gray-border"></div>
+        <div class="palette__color red-100-bg"></div>
+        <div class="palette__color yellow-200-bg"></div>
+        <div class="palette__color yellow-100-bg"></div>
+        <div class="palette__color green-100-bg"></div>
+        <div class="palette__color cyan-100-bg"></div>
+        <div class="palette__color blue-100-bg"></div>
+        <div class="palette__color blue-200-bg"></div>
+        <div class="palette__color purple-200-bg"></div>
+        <div class="palette__color pink-100-bg"></div>
+      </section>
       <a href="#" class="to-white"
         ><img
           src="assets/icons/palette.svg"
@@ -72,11 +84,21 @@ function cardsView() {
     ${Store.cards.map(renderCard).join("")}
   `;
 
+  // const listenPaletteCard = () => {
+  //   const card
+  //   const paletteOpener = document.querySelector(".to-white");
+  //   const palette = document.querySelector(".palette__container");
+  //   paletteOpener.addEventListener("click", () =>
+  //     palette.classList.toggle("ds-none")
+  //   );
+  // };
+
   return {
     toString() {
       return template
     },
     addListeners() {
+      // listenPaletteCard();
     }
   }
 }
@@ -94,6 +116,18 @@ const Module = (function () {
   }
 })
 
+//Create Input
+// const createInput = ({ id, placeholder = "",  }) => {
+//   return `
+//   <input
+//     id="${id}"
+//     type="text"
+//     placeholder="${placeholder}"
+//     class="input__content heading inherit-bc"
+//   />
+//   `;
+// };
+
 // New-note-view
 const formView = (function () {
   const template = `
@@ -101,11 +135,13 @@ const formView = (function () {
           <div class="input__container padding">
             <div class="full-width">
               <input
+                id="title"
                 type="text"
                 placeholder="Title"
                 class="input__content heading inherit-bc"
               />
               <input
+                id="description"
                 type="text"
                 placeholder="Take a note..."
                 class="input__content inherit-bc"
@@ -181,6 +217,24 @@ const Layout = (function () {
     });
   };
 
+  const submitListener = () => {
+    const form = document.querySelector("#form");
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const { title, description } = event.target.elements;
+      const newCard = {
+        title: title.value,
+        description: description.value,
+        class: form.classList[0]
+      }
+
+      Store.createCard(newCard);
+      // Cards = DOMHandler(".card-container");
+      cartas = cardsView();
+      Cards.load(cartas);
+    });
+  };  
+
   return {
     toString() {
       return template
@@ -188,6 +242,7 @@ const Layout = (function () {
     addListeners() {
       listenPalette();
       colorSelector();
+      submitListener();
     }
   };
 })
@@ -198,7 +253,7 @@ mainView = Layout();
 App.load(mainView);
 
 let Cards = DOMHandler(".card-container");
-const cartas = cardsView();
+let cartas = cardsView();
 Cards.load(cartas);
 
 // Trash View
