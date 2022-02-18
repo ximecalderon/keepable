@@ -25,10 +25,6 @@ const Store = (function () {
       description: "Desc 2",
       class: "blue-200-bg",
     },
-    { title: "Note 2",
-      description: "Desc 2",
-      class: "pink-100-bg",
-    },
   ];
 
   return {
@@ -135,17 +131,17 @@ const formView = (function() {
     toString() {
       return template
     },
-    // addListeners(){}
+    //  addListeners(){}
   }
-});
+})();
 
 
 const Layout = (function() {
   const template = `
   ${formView}
-  // <section class="card-container">
+  <section class="card-container">
   
-  // </section>
+  </section>
   `;
 
   return {
