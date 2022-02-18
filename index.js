@@ -1,3 +1,4 @@
+// DOM Handler
 function DOMHandler(parentSelector) {
   let parent = document.querySelector(parentSelector);
 
@@ -11,8 +12,7 @@ function DOMHandler(parentSelector) {
   };
 };
 
-
-
+// Store
 const Store = (function () {
   const initialCards = [
     {
@@ -41,7 +41,7 @@ const Store = (function () {
   };
 })();
 
-
+// NotesView
 function cardsView() {
   const renderCard = (card) => {
     return `<div class="card__content ${card.class}">
@@ -76,25 +76,26 @@ function cardsView() {
     toString() {
       return template
     },
-    addListeners(){ 
+    addListeners() {
     }
   }
 }
 
+// Module for copy/paste
 
-
-const Module = (function() {
+const Module = (function () {
   const template = ``;
 
   return {
     toString() {
       return template
     },
-    addListeners(){}
+    addListeners() { }
   }
 })
 
-const formView = (function() {
+// New-note-view
+const formView = (function () {
   const template = `
   <form action="" class="#">
           <div class="input__container padding">
@@ -139,19 +140,19 @@ const formView = (function() {
         </form>
   `;
 
-  
+
 
   return {
     toString() {
       return template
     },
-     addListeners(){
-     }
+    addListeners() {
+    }
   }
 })();
 
-
-const Layout = (function() {
+// Layout
+const Layout = (function () {
   const template = `
   ${formView}
   <section class="card-container">
@@ -171,13 +172,13 @@ const Layout = (function() {
     toString() {
       return template
     },
-    addListeners(){
+    addListeners() {
       listenPalette();
     }
   };
 })
 
-
+// Index
 let App = DOMHandler("#main");
 mainView = Layout();
 App.load(mainView);
@@ -186,4 +187,4 @@ let Cards = DOMHandler(".card-container");
 const cartas = cardsView();
 Cards.load(cartas);
 
-
+// Trash View
