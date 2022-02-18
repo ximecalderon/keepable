@@ -51,3 +51,7 @@
 .full-width {
   width: 100%;
 }
+
+.ds-none {
+  display: none !important;
+}

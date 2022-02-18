@@ -6,7 +6,7 @@ function DOMHandler(parentSelector) {
   return {
     load(module) {
       parent.innerHTML = module;
-      // module.addListeners();
+      module.addListeners();
     },
   };
 };
@@ -76,8 +76,8 @@ function cardsView() {
     toString() {
       return template
     },
-    // addListeners(){ 
-    // }
+    addListeners(){ 
+    }
   }
 }
 
@@ -112,6 +112,18 @@ const formView = (function() {
             </div>
             <div class="card__footer full-width">
               <div class="card__icon--custom">
+                <div class="palette__container ds-none">
+                <div class="palette__color white-bg gray-border"></div>
+                <div class="palette__color red-100-bg"></div>
+                <div class="palette__color yellow-200-bg"></div>
+                <div class="palette__color yellow-100-bg"></div>
+                <div class="palette__color green-100-bg"></div>
+                <div class="palette__color cyan-100-bg"></div>
+                <div class="palette__color blue-100-bg"></div>
+                <div class="palette__color blue-200-bg"></div>
+                <div class="palette__color purple-200-bg"></div>
+                <div class="palette__color pink-100-bg"></div>
+              </div>
                 <a href="#" class="to-white"
                   ><img
                     src="/assets/icons/palette.svg"
@@ -127,11 +139,14 @@ const formView = (function() {
         </form>
   `;
 
+  
+
   return {
     toString() {
       return template
     },
-    //  addListeners(){}
+     addListeners(){
+     }
   }
 })();
 
@@ -144,12 +159,21 @@ const Layout = (function() {
   </section>
   `;
 
+  const listenPalette = () => {
+    const paletteOpener = document.querySelector(".to-white");
+    const palette = document.querySelector(".palette__container");
+    paletteOpener.addEventListener("click", () =>
+      palette.classList.toggle("ds-none")
+    );
+  };
+
   return {
     toString() {
       return template
     },
-    // addListeners(){
-    // }
+    addListeners(){
+      listenPalette();
+    }
   };
 })
 
