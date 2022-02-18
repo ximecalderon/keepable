@@ -97,23 +97,23 @@ const Module = (function () {
 // New-note-view
 const formView = (function () {
   const template = `
-  <form action="" class="" id="form">
+  <form action="" class="white-bg" id="form">
           <div class="input__container padding">
             <div class="full-width">
               <input
                 type="text"
                 placeholder="Title"
-                class="input__content heading"
+                class="input__content heading inherit-bc"
               />
               <input
                 type="text"
                 placeholder="Take a note..."
-                class="input__content"
+                class="input__content inherit-bc"
               />
             </div>
             <div class="card__footer full-width">
               <div class="card__icon--custom">
-                <div class="palette__container ds-none">
+                <section class="palette__container ds-none">
                   <div class="palette__color white-bg gray-border"></div>
                   <div class="palette__color red-100-bg"></div>
                   <div class="palette__color yellow-200-bg"></div>
@@ -124,7 +124,7 @@ const formView = (function () {
                   <div class="palette__color blue-200-bg"></div>
                   <div class="palette__color purple-200-bg"></div>
                   <div class="palette__color pink-100-bg"></div>
-                </div>
+                </section>
               
                 <a href="#" class="to-white"
                   ><img
@@ -134,7 +134,7 @@ const formView = (function () {
                 /></a>
               </div>
               <!-- <div> -->
-              <button type="submit" class="button__custom">Keep it!</button>
+              <button type="submit" class="button__custom inherit-bc">Keep it!</button>
               <!-- </div> -->
             </div>
           </div>
@@ -174,6 +174,7 @@ const Layout = (function () {
     const palette = document.querySelector(".palette__container");
     palette.addEventListener("click", function(event) {
       let target = event.target;
+      if (target.tagName != 'DIV') return;
       if (form.classList.length != 0) form.classList.remove(`${form.classList[0]}`);
       form.classList.add(`${target.classList[1]}`);  
       palette.classList.toggle("ds-none")  
