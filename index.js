@@ -230,6 +230,8 @@ const Layout = (function () {
 
       Store.createCard(newCard);
       // Cards = DOMHandler(".card-container");
+      // mainView = Layout();
+      // App.load(mainView);
       cartas = cardsView();
       Cards.load(cartas);
     });
@@ -249,7 +251,7 @@ const Layout = (function () {
 
 // Index
 let App = DOMHandler("#main");
-mainView = Layout();
+let mainView = Layout();
 App.load(mainView);
 
 let Cards = DOMHandler(".card-container");
