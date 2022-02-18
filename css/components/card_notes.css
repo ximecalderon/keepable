@@ -1,0 +1,84 @@
+@import url("./css/reset.css");
+
+.card__content {
+  width: 260px;
+  height: 260px;
+  background: pink;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card__text {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px 20px;
+}
+
+.card__icon {
+  display: flex;
+  justify-content: flex-start;
+  gap: 9px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.card__icon--custom {
+  width: 36px;
+  height: 36px;
+  border-radius: 100px;
+  background: rgba(255, 255, 255, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/*INPUT*/
+
+.input__container,
+.select__input {
+  border: 1px solid var(--gray-200);
+  padding: 0.5em 0.75em;
+  border-radius: 0.375em;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  background-color: white;
+  /*width: 100%;*/
+
+  flex-direction: column;
+}
+
+.input__content {
+  padding: 0;
+  margin: 0;
+  border: none;
+  width: 100%;
+}
+
+.input__content::placeholder {
+  color: var(--gray-200);
+}
+
+input:focus {
+  outline: none;
+}
+
+.padding {
+  padding: 20px 20px;
+}
+
+input[type="button"],
+button {
+  background: none;
+  border: 0;
+  color: inherit;
+  font-weight: bold;
+}
+
+.card__footer {
+  display: flex;
+  justify-content: space-between;
+}
