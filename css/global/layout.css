@@ -1,0 +1,44 @@
+body {
+  background-color: #1d2128;
+}
+
+.higher-section {
+  display: flex;
+  padding-top: 53px;
+}
+
+/* provisional */
+
+.form {
+  width: 600px;
+  height: 150px;
+  border-radius: 8px;
+  background-color: #fff;
+}
+
+.card {
+  width: 260px;
+  height: 260px;
+  border-radius: 8px;
+  background-color: #fff;
+}
+
+.main {
+  padding: 23px 30px;
+  width: 86.8%;
+  height: 100vh;
+  margin-left: 250px;
+  position: absolute;
+  z-index: -1;
+  display: flex;
+  gap: 59px;
+  flex-direction: column;
+  align-items: center;
+}
+
+.card-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
