@@ -7,7 +7,7 @@
   width: 250px;
   height: 100%;
   background-color: #1d2128;
-  z-index: 1;
+  z-index: 3;
 }
 
 .aside-link {

@@ -29,10 +29,29 @@
   width: 36px;
   height: 36px;
   border-radius: 100px;
-  background: rgba(255, 255, 255, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.card__icon--custom:hover {
+  background-color: var(--white-transparent);
+}
+
+.card__icon--custom:active {
+  background-color: var(--gray-200);
+}
+
+.to-white:active {
+  filter: brightness(0) invert(1);
+}
+
+.button__custom {
+  border-radius: 8px;
+}
+
+.button__custom:hover {
+  background-color: var(--gray-transparent);
 }
 
 /*INPUT*/
@@ -73,7 +92,7 @@ input:focus {
 
 input[type="button"],
 button {
-  background: none;
+  background-color: white;
   border: 0;
   color: inherit;
   font-weight: bold;

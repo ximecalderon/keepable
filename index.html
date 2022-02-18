@@ -3,12 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css" />
     <title>Keepable</title>
   </head>
   <body>
     <header class="header">
-      <img class="logo-img" src="assets/keepable-logo.png" alt="keepable-logo">
+      <img
+        class="logo-img"
+        src="assets/img/keepable-logo.png"
+        alt="keepable-logo"
+      />
       <div class="header-text__container">
         <p class="heading white">Welcome to {keepable}</p>
       </div>
@@ -16,31 +20,41 @@
     <section class="higher-section">
       <aside class="aside">
         <a href="index.html" class="aside-link">
-          <img src="assets/Vector.svg">
-          Notes  
+          <img src="assets/icons/notes.svg" />
+          Notes
         </a>
         <a href="#" class="aside-link">
-          <img src="assets/Vector (1).svg">
+          <img src="assets/icons/trash.svg" />
           Trash
         </a>
       </aside>
       <main class="main">
-
-
-
         <form action="" class="#">
-          <div class="input__container padding"> 
+          <div class="input__container padding">
             <div class="full-width">
-                <input type="text" placeholder="Title" class="input__content heading">
-                <input type="text" placeholder="Take a note..." class="input__content">
+              <input
+                type="text"
+                placeholder="Title"
+                class="input__content heading"
+              />
+              <input
+                type="text"
+                placeholder="Take a note..."
+                class="input__content"
+              />
             </div>
             <div class="card__footer full-width">
               <div class="card__icon--custom">
-                <a href="#"><img src="/img/color.svg" alt="icon-color" class="center"></a>
+                <a href="#" class="to-white"
+                  ><img
+                    src="/assets/icons/palette.svg"
+                    alt="icon-color"
+                    class="center"
+                /></a>
               </div>
-              <div>
-                <button type="submit" class="button__custom">Keep it!</button>
-              </div>
+              <!-- <div> -->
+              <button type="submit" class="button__custom">Keep it!</button>
+              <!-- </div> -->
             </div>
           </div>
         </form>
@@ -51,20 +65,25 @@
               <p class="heading">This is the titile</p>
               <p>This is the body for the note</p>
             </div>
-      
+
             <div class="card__icon">
-                <div class="card__icon--custom">
-                  <a href="#"><img src="/img/color.svg" alt="icon-color" class="center"></a>
-                </div>
-                <div class="card__icon--custom">
-                  <a href="#"><img src="/img/trash.svg" alt="icon-trash"></a>
-                </div>
+              <div class="card__icon--custom">
+                <a href="#" class="to-white"
+                  ><img
+                    src="assets/icons/palette.svg"
+                    alt="icon-color"
+                    class="center"
+                /></a>
+              </div>
+              <div class="card__icon--custom">
+                <a href="#" class="to-white"
+                  ><img src="assets/icons/trash_gray.svg" alt="icon-trash"
+                /></a>
+              </div>
             </div>
           </div>
-
         </section>
       </main>
     </section>
-    
   </body>
 </html>
