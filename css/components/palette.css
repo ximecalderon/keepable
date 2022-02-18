@@ -15,3 +15,7 @@
   height: 25px;
   border-radius: 100px;
 }
+
+.palette__color:hover {
+  border: 0.5px solid var(--gray-200);
+}

@@ -3,7 +3,6 @@
 .card__content {
   width: 260px;
   height: 260px;
-  background: pink;
   border-radius: 8px;
   display: flex;
   flex-direction: column;
@@ -65,7 +64,7 @@
   align-items: center;
   gap: 0.5em;
   background-color: white;
-  width: 600px;
+  max-width: 600px;
   height: 150px;
 
   flex-direction: column;
@@ -101,4 +100,11 @@ button {
 .card__footer {
   display: flex;
   justify-content: space-between;
+}
+
+@media (max-width: 750px) {
+  .card__content {
+    width: 100%;
+    max-width: 600px;
+  }
 }

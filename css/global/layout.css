@@ -1,10 +1,9 @@
 body {
-  background-color: #1d2128;
+  background-color: var(--gray-300);
 }
 
 .higher-section {
   display: flex;
-  padding-top: 53px;
 }
 
 /* provisional */
@@ -25,10 +24,11 @@ body {
 
 .main {
   padding: 23px 30px;
-  width: 80%;
+  width: calc(100vw - 280px);
   height: 100vh;
   position: absolute;
-  margin-left: 250px;
+  top: 70px;
+  left: 280px;
   z-index: 1;
   display: flex;
   gap: 59px;
@@ -37,8 +37,16 @@ body {
 }
 
 .card-container {
+  margin: 0 auto;
   display: flex;
   justify-content: center;
   gap: 20px;
   flex-wrap: wrap;
+}
+
+@media (max-width: 600px) {
+  .main {
+    width: calc(100vw - 70px);
+    left: 70px;
+  }
 }
