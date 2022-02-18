@@ -97,7 +97,7 @@ const Module = (function () {
 // New-note-view
 const formView = (function () {
   const template = `
-  <form action="" class="#">
+  <form action="" class="" id="form">
           <div class="input__container padding">
             <div class="full-width">
               <input
@@ -114,17 +114,18 @@ const formView = (function () {
             <div class="card__footer full-width">
               <div class="card__icon--custom">
                 <div class="palette__container ds-none">
-                <div class="palette__color white-bg gray-border"></div>
-                <div class="palette__color red-100-bg"></div>
-                <div class="palette__color yellow-200-bg"></div>
-                <div class="palette__color yellow-100-bg"></div>
-                <div class="palette__color green-100-bg"></div>
-                <div class="palette__color cyan-100-bg"></div>
-                <div class="palette__color blue-100-bg"></div>
-                <div class="palette__color blue-200-bg"></div>
-                <div class="palette__color purple-200-bg"></div>
-                <div class="palette__color pink-100-bg"></div>
-              </div>
+                  <div class="palette__color white-bg gray-border"></div>
+                  <div class="palette__color red-100-bg"></div>
+                  <div class="palette__color yellow-200-bg"></div>
+                  <div class="palette__color yellow-100-bg"></div>
+                  <div class="palette__color green-100-bg"></div>
+                  <div class="palette__color cyan-100-bg"></div>
+                  <div class="palette__color blue-100-bg"></div>
+                  <div class="palette__color blue-200-bg"></div>
+                  <div class="palette__color purple-200-bg"></div>
+                  <div class="palette__color pink-100-bg"></div>
+                </div>
+              
                 <a href="#" class="to-white"
                   ><img
                     src="/assets/icons/palette.svg"
@@ -168,12 +169,24 @@ const Layout = (function () {
     );
   };
 
+  const colorSelector = () => {
+    const form = document.querySelector("#form");
+    const palette = document.querySelector(".palette__container");
+    palette.addEventListener("click", function(event) {
+      let target = event.target;
+      if (form.classList.length != 0) form.classList.remove(`${form.classList[0]}`);
+      form.classList.add(`${target.classList[1]}`);  
+      palette.classList.toggle("ds-none")  
+    });
+  };
+
   return {
     toString() {
       return template
     },
     addListeners() {
       listenPalette();
+      colorSelector();
     }
   };
 })
