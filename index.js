@@ -40,25 +40,29 @@ const Store = (function () {
     trashCards: JSON.parse(localStorage.getItem("trashCards")) || trashCards,
     createCard(card) {
       this.cards.push(card);
+
       localStorage.setItem("cards", JSON.stringify(this.cards));
     },
     trashCard(id) {
       const card = this.cards.find((card) => card.id == id);
       this.cards.splice(this.cards.indexOf(card), 1);
       this.trashCards.push(card);
+
       localStorage.setItem("cards", JSON.stringify(this.cards));
       localStorage.setItem("trashCards", JSON.stringify(this.trashCards));
     },
-    restoreCard(trashCard) {
-      const index = this.trashCards.indexOf(trashCard);
-      this.trashCards.splice(index, 1);
-      this.cards.push(card);
+    restoreCard(id) {
+      const trashCard = this.trashCards.find((trashCard) => trashCard.id == id)
+      this.trashCards.splice(this.trashCards.indexOf(trashCard), 1);
+      this.cards.push(trashCard);
+
       localStorage.setItem("cards", JSON.stringify(this.cards));
       localStorage.setItem("trashCards", JSON.stringify(this.trashCards));
     },
-    deleteCard(trashCard) {
-      const index = this.cards.indexOf(trashCard);
+    deleteCard(id) {
+      const index = this.trashCards.findIndex((trashCard) => trashCard.id == id);
       this.trashCards.splice(index, 1);
+
       localStorage.setItem("trashCards", JSON.stringify(this.trashCards));
     },
   };
@@ -66,7 +70,7 @@ const Store = (function () {
 
 // Cards/Notes view
 
-const CardsView = (function cardsView() {
+const CardsView = function () {
   const renderCard = (card) => {
     return `
     <div class="card__content ${card.class}">
@@ -99,15 +103,14 @@ const CardsView = (function cardsView() {
   `;
 
   const listenTrash = () => {
-    const trashNotesList = document.querySelector(".js-cards");
+    const trashNotesList = document.querySelector(".js-delete");
 
     trashNotesList.addEventListener("click", (event) => {
       event.preventDefault();
-      // if (!event.target.classList.contains("js-delete")) return;
 
       const id = event.target.dataset.id;
       Store.trashCard(id);
-      Cards.load(CardsView)
+      Cards.load(CardsView());
     });
   };
 
@@ -119,7 +122,7 @@ const CardsView = (function cardsView() {
       listenTrash();
     }
   }
-})();
+};
 
 
 
@@ -222,6 +225,6 @@ mainView = Layout();
 App.load(mainView);
 
 let Cards = DOMHandler(".card-container");
-Cards.load(CardsView);
+Cards.load(CardsView());
 
 
