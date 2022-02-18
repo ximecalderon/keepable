@@ -13,12 +13,41 @@ function DOMHandler(parentSelector) {
 
 let App = DOMHandler(".card-container");
 
+const Store = (function () {
+  const initialCards = [
+    {
+      title: "Note 1",
+      description: "Desc 1",
+      class: "pink-100-bg",
+    },
+    {
+      category: "Note 2",
+      description: "Desc 2",
+      class: "blue-200-bg",
+    },
+  ];
+
+  return {
+    cards: JSON.parse(localStorage.getItem("cards")) || initialCards,
+    createCard(card) {
+      this.cards.push(card);
+      localStorage.setItem("cards", JSON.stringify(this.cards));
+    },
+    deleteCard(card) {
+      const index = this.cards.indexOf(card);
+      this.cards.splice(index, 1);
+      localStorage.setItem("cards", JSON.stringify(this.cards));
+    },
+  };
+})();
+
 
 function createCard() {
-  const template = `<div class="card__content">
+  const renderCard = (card) => {
+    return `<div class="card__content ${card.class}">
   <div class="card__text">
-    <p class="heading">This is the title</p>
-    <p>This is the body for the note</p>
+    <p class="heading">${card.title}</p>
+    <p>${card.description}</p>
   </div>
 
   <div class="card__icon">
@@ -36,7 +65,11 @@ function createCard() {
       /></a>
     </div>
   </div>
-  </div>`;
+  </div>`
+  }
+
+
+  const template = `${Store.cards.map(renderCard).join("")}`;
 
   return {
     toString() {
@@ -49,3 +82,14 @@ function createCard() {
 
 const Card = createCard();
 App.load(Card);
+
+const Module = (function() {
+  const template = ``;
+
+  return {
+    toString() {
+      return template
+    },
+    addListeners(){}
+  }
+})
