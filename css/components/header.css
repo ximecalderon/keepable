@@ -3,11 +3,11 @@
   align-items: center;
   gap: 117px;
   border-bottom: 1px solid #fff;
-  padding-left: 30px;
+  padding: 30px 23px;
   position: fixed;
   width: 100%;
   background-color: #1d2128;
-  height: 52px;
+  height: 70px;
   z-index: 2;
 }
 
@@ -18,4 +18,10 @@
 
 .header-text__container {
   width: 100%;
+}
+
+@media (max-width: 600px) {
+  .header {
+    justify-content: space-between;
+  }
 }

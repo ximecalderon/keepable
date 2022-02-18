@@ -1,10 +1,11 @@
 .aside {
-  padding-top: 15px;
+  padding-top: 8px;
+  top: 70px;
   display: flex;
   flex-direction: column;
   border-right: 1px solid #fff;
   position: fixed;
-  width: 250px;
+  width: 280px;
   height: 100%;
   background-color: #1d2128;
   z-index: 3;
@@ -21,4 +22,14 @@
 .aside-link:hover {
   background-color: var(--gray-200);
   border-radius: 0px 25px 25px 0px;
+}
+
+@media (max-width: 600px) {
+  .aside {
+    width: 70px;
+  }
+
+  .aside-title {
+    display: none;
+  }
 }
