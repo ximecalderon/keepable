@@ -101,3 +101,18 @@ button {
   display: flex;
   justify-content: space-between;
 }
+
+@media (max-width: 670px) {
+  .card-container {
+    justify-content: center;
+  }
+}
+
+/*Message*/
+.message {
+  color: white;
+  text-align: center;
+  font-size: 36px;
+  line-height: 48px;
+}
+
