@@ -22,6 +22,13 @@ const Store = (function () {
     };
   })();
 
+  const moveObj = (objID, fromArray, toArray) => {
+    const obj = fromArray.find((obj) => obj.id == objID);
+
+    fromArray.splice(fromArray.indexOf(obj), 1);
+    toArray.push(obj);
+  };
+
   let initialCards = [
     {
       id: idGenerator.next(),
@@ -44,7 +51,7 @@ const Store = (function () {
   ];
 
   /*********************** */
-  const trashCards = [
+  let trashCards = [
     {
       id: idGenerator.next(),
       title: "Note 3",
@@ -70,17 +77,13 @@ const Store = (function () {
       localStorage.setItem("cards", JSON.stringify(this.cards));
     },
     trashCard(id) {
-      const card = this.cards.find((card) => card.id == id);
-      this.cards.splice(this.cards.indexOf(card), 1);
-      this.trashCards.push(card);
+      moveObj(id, this.cards, this.trashCards);
 
       localStorage.setItem("cards", JSON.stringify(this.cards));
       localStorage.setItem("trashCards", JSON.stringify(this.trashCards));
     },
     restoreCard(id) {
-      const trashCard = this.trashCards.find((trashCard) => trashCard.id == id)
-      this.trashCards.splice(this.trashCards.indexOf(trashCard), 1);
-      this.cards.push(trashCard);
+      moveObj(id, this.trashCards, this.cards);
 
       localStorage.setItem("cards", JSON.stringify(this.cards));
       localStorage.setItem("trashCards", JSON.stringify(this.trashCards));
@@ -90,6 +93,12 @@ const Store = (function () {
       this.trashCards.splice(index, 1);
 
       localStorage.setItem("trashCards", JSON.stringify(this.trashCards));
+    },
+    changeColor(id, newClass) {
+      const card = this.cards.find((card) => card.id == id);
+      card.class = newClass;
+
+      localStorage.setItem("cards", JSON.stringify(this.cards));
     }
   };
 })();
@@ -106,7 +115,7 @@ function CardsView() {
       <div class="card__icon">
         <div class="card__icon--custom">
           <section class="palette__container ds-none card-palette" data-id="${card.id}">
-            <div class="palette__color white-bg gray-border"></div>
+            <div class="palette__color gray-border white-bg"></div>
             <div class="palette__color red-100-bg"></div>
             <div class="palette__color yellow-200-bg"></div>
             <div class="palette__color yellow-100-bg"></div>
@@ -154,36 +163,48 @@ function CardsView() {
     const paletteOpenerCards = cardContainer.querySelectorAll("#cardsPalette");
     const allPalettes = document.querySelectorAll(".palette__container");
     paletteOpenerCards.forEach((note) => {
-      
-      note.addEventListener("click", (event) =>{
+
+      note.addEventListener("click", (event) => {
         event.preventDefault();
-        for(let singlePalette of allPalettes){
-          if (!(singlePalette.classList[1] == "ds-none") && !(singlePalette.classList[singlePalette.classList.length-1] == "ds-none")) {
+        for (let singlePalette of allPalettes) {
+          if (!(singlePalette.classList[1] == "ds-none") && !(singlePalette.classList[singlePalette.classList.length - 1] == "ds-none")) {
             singlePalette.classList.toggle("ds-none");
           } else {
             continue;
           }
         }
-
         const id = event.target.dataset.id;
         chosenCard = document.querySelector(`[data-id="${id}"]`);
         const chosenPalette = chosenCard.querySelector(".palette__container");
         chosenPalette.classList.toggle("ds-none");
+        colorSelectorCard();
       });
-    }) 
+    })
   };
 
-  // const colorSelectorCard = () => {
-  //   const form = document.querySelector("#form");
-  //   const palette = document.querySelector(".palette__container");
-  //   palette.addEventListener("click", function (event) {
-  //     let target = event.target;
-  //     if (target.tagName != 'DIV') return;
-  //     if (form.classList.length != 0) form.classList.remove(`${form.classList[0]}`);
-  //     form.classList.add(`${target.classList[1]}`);
-  //     palette.classList.toggle("ds-none")
-  //   });
-  // };
+  const colorSelectorCard = () => {
+    const allPalettes2 = document.querySelectorAll(".palette__container");
+    let idCard;
+    let paletteOpened;
+    for(let singlePalette of allPalettes2){
+      if (!(singlePalette.classList[1] == "ds-none") && !(singlePalette.classList[singlePalette.classList.length-1] == "ds-none")) {
+        idCard = singlePalette.dataset.id;
+        paletteOpened = singlePalette;
+      } else {
+        continue;
+      }
+    }
+    let cardToChC = document.querySelector(`[data-id="${idCard}"]`);
+
+    paletteOpened.addEventListener("click", function (event) {
+      let target = event.target;
+      if (target.tagName != 'DIV') return;
+      cardToChC.classList.remove(`${cardToChC.classList[cardToChC.classList.length - 1]}`)
+      cardToChC.classList.add(`${target.classList[target.classList.length - 1]}`);
+      Store.changeColor(idCard, target.classList[target.classList.length - 1]);
+      paletteOpened.classList.toggle("ds-none");
+    });
+  };
 
   const listenTrash = () => {
     const trashNotesList = document.querySelectorAll("#superespecial");
@@ -219,14 +240,14 @@ const trashView = function () {
   </div>
 
   <div class="card__icon">
-    <div class="card__icon--custom js-trash" data-id="${card.id}">
-    <a href="#" class="to-white"
-    ><img src="assets/icons/trash_gray.svg" alt="icon-trash"
+    <div class="card__icon--custom js-trash">
+    <a href="#" class="to-white" id="js-trashs"
+    ><img src="assets/icons/trash_gray.svg" alt="icon-trash" data-id="${card.id}"
   /></a>
     </div>
-    <div class="card__icon--custom js-restore" data-id="${card.id}">
-      <a href="#"><img src="assets/icons/arrow.svg" alt="icon-color" 
-      class="center js-delete"></a>
+    <div class="card__icon--custom" data-id="${card.id}">
+      <a href="#" class="js-restore"><img src="assets/icons/arrow.svg" alt="icon-color" 
+      class="center" data-id="${card.id}"></a>
     </div>
   </div>
   </div>`;
@@ -240,27 +261,41 @@ const trashView = function () {
   `;
 
   const trashDelete = () => {
-    const trashNotesList = document.querySelector(".js-trash");
+    const trashNotes = document.querySelectorAll("#js-trashs");
+    const containerMessage = document.querySelector(".card-container");
 
-    trashNotesList.addEventListener("click", (event) => {
-      event.preventDefault();
+    if (trashNotes.length == 0) {
+      containerMessage.classList.add('center-vertically')
+      containerMessage.innerHTML = "<h1>No notes in trash</h1>"
+      h1 = document.querySelector("h1")
+      h1.classList.add('heading', 'message')
+    }
 
-      const id = event.target.dataset.id;
-      Store.deleteCard(id);
-      mainSection.load(trashView())
-    });
+    trashNotes.forEach((Note) => {
+      Note.addEventListener("click", (event) => {
+        event.preventDefault();
+
+        const id = event.target.dataset.id;
+        console.log(id);
+        console.log(event.target);
+        console.log(event.target.dataset.id);
+        Store.deleteCard(id);
+        App.load(trashView());
+      });
+    })
   };
 
   const restore = () => {
-    const trashView = document.querySelector(".js-restore");
+    const restoreList = document.querySelectorAll(".js-restore");
+    restoreList.forEach((Note) => {
+      Note.addEventListener("click", (event) => {
+        event.preventDefault();
 
-    trashView.addEventListener("click", (event) => {
-      event.preventDefault();
-
-      const id = event.target.dataset.id;
-      Store.restoreCard(id);
-      mainSection.load(trashView())
-    });
+        const id = event.target.dataset.id;
+        Store.restoreCard(id);
+        App.load(trashView())
+      });
+    })
   };
 
   return {
@@ -372,8 +407,9 @@ const Layout = (function () {
   `;
 
   const listenPalette = () => {
+    const form = document.querySelector("#form");
     const paletteOpener = document.querySelector("#formPalette");
-    const palette = document.querySelector(".palette__container");
+    const palette = form.querySelector(".palette__container");
     paletteOpener.addEventListener("click", () =>
       palette.classList.toggle("ds-none")
     );
