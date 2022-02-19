@@ -14,7 +14,7 @@ function DOMHandler(parentSelector) {
 
 // Store
 const Store = (function () {
-  const initialCards = [
+  let initialCards = [
     {
       title: "Note 1",
       description: "Desc 1",
@@ -27,16 +27,43 @@ const Store = (function () {
     },
   ];
 
+  let trashCards = [
+    {
+      title: "Note 3",
+      description: "Desc 1",
+      class: "pink-100-bg",
+    }
+  ];
+
   return {
     cards: JSON.parse(localStorage.getItem("cards")) || initialCards,
+    trashCards: JSON.parse(localStorage.getItem("trashCards")) || trashCards,
     createCard(card) {
       this.cards.push(card);
+
       localStorage.setItem("cards", JSON.stringify(this.cards));
     },
-    deleteCard(card) {
-      const index = this.cards.indexOf(card);
-      this.cards.splice(index, 1);
+    trashCard(id) {
+      const card = this.cards.find((card) => card.id == id);
+      this.cards.splice(this.cards.indexOf(card), 1);
+      this.trashCards.push(card);
+
       localStorage.setItem("cards", JSON.stringify(this.cards));
+      localStorage.setItem("trashCards", JSON.stringify(this.trashCards));
+    },
+    restoreCard(id) {
+      const trashCard = this.trashCards.find((trashCard) => trashCard.id == id)
+      this.trashCards.splice(this.trashCards.indexOf(trashCard), 1);
+      this.cards.push(trashCard);
+
+      localStorage.setItem("cards", JSON.stringify(this.cards));
+      localStorage.setItem("trashCards", JSON.stringify(this.trashCards));
+    },
+    deleteCard(id) {
+      const index = this.trashCards.findIndex((trashCard) => trashCard.id == id);
+      this.trashCards.splice(index, 1);
+
+      localStorage.setItem("trashCards", JSON.stringify(this.trashCards));
     },
   };
 })();
@@ -44,40 +71,41 @@ const Store = (function () {
 // NotesView
 function cardsView() {
   const renderCard = (card) => {
-    return `<div class="card__content ${card.class}">
-  <div class="card__text">
-    <p class="heading">${card.title}</p>
-    <p>${card.description}</p>
-  </div>
-
-  <div class="card__icon">
-    <div class="card__icon--custom">
-      <section class="palette__container ds-none">
-        <div class="palette__color white-bg gray-border"></div>
-        <div class="palette__color red-100-bg"></div>
-        <div class="palette__color yellow-200-bg"></div>
-        <div class="palette__color yellow-100-bg"></div>
-        <div class="palette__color green-100-bg"></div>
-        <div class="palette__color cyan-100-bg"></div>
-        <div class="palette__color blue-100-bg"></div>
-        <div class="palette__color blue-200-bg"></div>
-        <div class="palette__color purple-200-bg"></div>
-        <div class="palette__color pink-100-bg"></div>
-      </section>
-      <a href="#" class="to-white"
-        ><img
-          src="assets/icons/palette.svg"
-          alt="icon-color"
-          class="center"
-      /></a>
+    return  `
+    <div class="card__content ${card.class}">
+      <div class="card__text">
+        <p class="heading">${card.title}</p>
+        <p>${card.description}</p>
+      </div>
+      <div class="card__icon">
+        <div class="card__icon--custom">
+          <section class="palette__container ds-none">
+            <div class="palette__color white-bg gray-border"></div>
+            <div class="palette__color red-100-bg"></div>
+            <div class="palette__color yellow-200-bg"></div>
+            <div class="palette__color yellow-100-bg"></div>
+            <div class="palette__color green-100-bg"></div>
+            <div class="palette__color cyan-100-bg"></div>
+            <div class="palette__color blue-100-bg"></div>
+            <div class="palette__color blue-200-bg"></div>
+            <div class="palette__color purple-200-bg"></div>
+            <div class="palette__color pink-100-bg"></div>
+          </section>
+          <a href="#" class="to-white"
+            ><img
+              src="assets/icons/palette.svg"
+              alt="icon-color"
+              class="center"
+          /></a>
+        </div>
+        <div class="card__icon--custom js-delete">
+          <a href="#" class="to-white"
+            ><img src="assets/icons/trash_gray.svg" alt="icon-trash"
+          /></a>
+        </div>
+      </div>
     </div>
-    <div class="card__icon--custom">
-      <a href="#" class="to-white"
-        ><img src="assets/icons/trash_gray.svg" alt="icon-trash"
-      /></a>
-    </div>
-  </div>
-  </div>`
+    `;
   }
 
   const template = `
@@ -92,6 +120,17 @@ function cardsView() {
   //     palette.classList.toggle("ds-none")
   //   );
   // };
+  const listenTrash = () => {
+    const trashNotesList = document.querySelector(".js-delete");
+
+    trashNotesList.addEventListener("click", (event) => {
+      event.preventDefault();
+
+      const id = event.target.dataset.id;
+      Store.trashCard(id);
+      Cards.load(CardsView());
+    });
+  };
 
   return {
     toString() {
@@ -99,9 +138,10 @@ function cardsView() {
     },
     addListeners() {
       // listenPaletteCard();
+      listenTrash();
     }
   }
-}
+};
 
 // Module for copy/paste
 
@@ -189,11 +229,11 @@ const formView = (function () {
 })();
 
 // Layout
+
 const Layout = (function () {
   const template = `
   ${formView}
-  <section class="card-container">
-  
+  <section class="card-container js-cards">
   </section>
   `;
 
@@ -255,7 +295,8 @@ let mainView = Layout();
 App.load(mainView);
 
 let Cards = DOMHandler(".card-container");
-let cartas = cardsView();
+let cartas = CardsView();
 Cards.load(cartas);
+// Cards.load(CardsView());
 
 // Trash View
