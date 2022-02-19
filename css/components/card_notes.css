@@ -9,7 +9,12 @@
   justify-content: space-between;
 }
 
+.card__body {
+  display: flex;
+  justify-content: space-between;
+}
 .card__text {
+  width: 220px;
   display: flex;
   flex-direction: column;
   gap: 10px;

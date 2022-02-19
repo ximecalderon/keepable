@@ -5,9 +5,18 @@ function CardsView() {
   const renderCard = (card) => {
     return `
     <div class="card__content ${card.class}" data-id="${card.id}">
-      <div class="card__text">
-        <p class="heading">${card.title}</p>
-        <p>${card.description}</p>
+      <div class="card__body">
+        <div class="card__text">
+          <p class="heading">${card.title}</p>
+          <p>${card.description}</p>
+        </div>
+        <a href="#" class="card__icon--custom" data-id="${card.id}"
+          ><img
+            src="assets/icons/pin_off.svg"
+            alt="icon-color"
+            class="center padding-9"
+            data-id="${card.id}"
+        /></a>
       </div>
       <div class="card__icon">
         <div class="card__icon--custom">
