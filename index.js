@@ -39,7 +39,7 @@ const Store = (function () {
 
   /*********************** */
   const trashCards = [
-    { 
+    {
       id: idGenerator.next(),
       title: "Note 3",
       description: "Desc 3",
@@ -52,13 +52,13 @@ const Store = (function () {
       class: "blue-200-bg",
     },
   ];
-   /*********************** */
+  /*********************** */
 
   return {
     cards: JSON.parse(localStorage.getItem("cards")) || initialCards,
     trashCards: JSON.parse(localStorage.getItem("trashCards")) || trashCards,
     createCard(card) {
-      card.id = idGenerator.next() 
+      card.id = idGenerator.next()
       this.cards.push(card);
 
       localStorage.setItem("cards", JSON.stringify(this.cards));
@@ -84,29 +84,14 @@ const Store = (function () {
       this.trashCards.splice(index, 1);
 
       localStorage.setItem("trashCards", JSON.stringify(this.trashCards));
-    },
-
-  /******************************** */
-    // trash: JSON.parse(localStorage.getItem("trash")) || trashCards,
-    // createTrash(trash) {
-    //   this.trash.push(trash);
-    //   localStorage.setItem("trash", JSON.stringify(this.trash));
-    // },
-
-    // deleteTrash(trash) {
-    //   const index = this.cards.indexOf(trash);
-    //   this.trash.splice(index, 1);
-    //   localStorage.setItem("trash", JSON.stringify(this.cards));
-    // },
-
-  /******************************** */
+    }
   };
 })();
 
 // NotesView
 function CardsView() {
   const renderCard = (card) => {
-    return  `
+    return `
     <div class="card__content ${card.class}">
       <div class="card__text">
         <p class="heading">${card.title}</p>
@@ -133,7 +118,7 @@ function CardsView() {
               class="center"
           /></a>
         </div>
-        <div class="card__icon--custom js-delete">
+        <div class="card__icon--custom js-delete" data-id="${card.id}">
           <a href="#" class="to-white"
             ><img src="assets/icons/trash_gray.svg" alt="icon-trash"
           /></a>
@@ -179,42 +164,54 @@ function CardsView() {
 }
 
 /************************************ */
-const trashView = function (){
+const trashView = function () {
   const renderCard = (card) => {
-    return `<div class="card__content ${card.class} js-trash">
+    return `<div class="card__content ${card.class}">
   <div class="card__text">
     <p class="heading">${card.title}</p>
     <p>${card.description}</p>
   </div>
 
   <div class="card__icon">
-    <div class="card__icon--custom">
+    <div class="card__icon--custom js-trash" data-id="${card.id}">
     <a href="#" class="to-white"
     ><img src="assets/icons/trash_gray.svg" alt="icon-trash"
   /></a>
     </div>
-    <div class="card__icon--custom">
+    <div class="card__icon--custom js-restore" data-id="${card.id}">
       <a href="#"><img src="assets/icons/arrow.svg" alt="icon-color" 
       class="center js-delete"></a>
     </div>
   </div>
   </div>`;
   };
-  
+
 
   const template = `
     ${Store.trashCards.map(renderCard).join("")}
   `;
 
   const trashDelete = () => {
-    const trashView = document.querySelector(".js-trash");
+    const trashNotesList = document.querySelector(".js-trash");
+
+    trashNotesList.addEventListener("click", (event) => {
+      event.preventDefault();
+
+      const id = event.target.dataset.id;
+      Store.deleteCard(id);
+      mainSection.load(trashView())
+    });
+  };
+
+  const restore = () => {
+    const trashView = document.querySelector(".js-restore");
 
     trashView.addEventListener("click", (event) => {
       event.preventDefault();
-      if (!event.target.classList.contains("js-delete")) return;
 
       const id = event.target.dataset.id;
-      Store.deleteTrash(id);
+      Store.restoreCard(id);
+      mainSection.load(trashView())
     });
   };
 
@@ -222,8 +219,9 @@ const trashView = function (){
     toString() {
       return template
     },
-    addListeners(){
+    addListeners() {
       trashDelete();
+      restore();
     },
   };
 }
@@ -336,12 +334,12 @@ const Layout = (function () {
   const colorSelector = () => {
     const form = document.querySelector("#form");
     const palette = document.querySelector(".palette__container");
-    palette.addEventListener("click", function(event) {
+    palette.addEventListener("click", function (event) {
       let target = event.target;
       if (target.tagName != 'DIV') return;
       if (form.classList.length != 0) form.classList.remove(`${form.classList[0]}`);
-      form.classList.add(`${target.classList[1]}`);  
-      palette.classList.toggle("ds-none")  
+      form.classList.add(`${target.classList[1]}`);
+      palette.classList.toggle("ds-none")
     });
   };
 
@@ -363,7 +361,7 @@ const Layout = (function () {
       cartas = CardsView();
       Cards.load(cartas);
     });
-  };  
+  };
 
   return {
     toString() {
@@ -383,8 +381,7 @@ let mainView = Layout();
 App.load(mainView);
 
 let Cards = DOMHandler(".card-container");
-let cartas = CardsView();
-Cards.load(cartas);
+Cards.load(CardsView());
 
 //let ContentTrash = DOMHandler(".card-container");
 //const trashVi = trashView();
