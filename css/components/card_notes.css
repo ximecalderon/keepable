@@ -102,8 +102,8 @@ button {
   justify-content: space-between;
 }
 
-@media (max-width: 670px) {
+/* @media (max-width: 670px) {
   .card-container {
     justify-content: center;
   }
-}
+} */
