@@ -151,7 +151,7 @@ function CardsView() {
     trashNotesList.forEach((Note) => {
       Note.addEventListener("click", (event) => {
         event.preventDefault();
-        
+
         const id = event.target.dataset.id;
         console.log(id);
         console.log(event.target);
@@ -161,7 +161,7 @@ function CardsView() {
         Cards.load(CardsView());
       });
     })
-    
+
   };
 
   return {
@@ -200,7 +200,9 @@ const trashView = function () {
 
 
   const template = `
-    ${Store.trashCards.map(renderCard).join("")}
+    <section class="card-container">
+      ${Store.trashCards.map(renderCard).join("")}
+    </section>
   `;
 
   const trashDelete = () => {

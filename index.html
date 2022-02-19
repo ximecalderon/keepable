@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="css/style.css" />
     <title>Keepable</title>
-    
   </head>
   <body>
     <header class="header">
@@ -21,12 +20,12 @@
     <section class="higher-section">
       <aside class="aside">
         <a href="index.html" class="aside-link" id="notesAnchor">
-          <img src="assets/icons/notes.svg" />
-          <p class="aside-title" >Notes</p>
+          <img src="assets/icons/notes.svg" class="notes-icon" />
+          <p class="aside-title">Notes</p>
         </a>
         <a href="#" class="aside-link" id="trashAnchor">
-          <img src="assets/icons/trash.svg" />
-          <p class="aside-title" >Trash</p>
+          <img src="assets/icons/trash.svg" class="trash-icon" />
+          <p class="aside-title">Trash</p>
         </a>
       </aside>
       <main id="main" class="main">
@@ -54,11 +53,12 @@
                 /></a>
               </div>
               <!-- <div> -->
-              <!-- <button type="submit" class="button__custom">Keep it!</button> -->
-              <!-- </div> -->
-            <!-- </div> -->
-          <!-- </div> -->
-        <!-- </form> --> -->
+        <!-- <button type="submit" class="button__custom">Keep it!</button> -->
+        <!-- </div> -->
+        <!-- </div> -->
+        <!-- </div> -->
+        <!-- </form> -->
+        -->
 
         <!-- <section class="card-container">
           <div class="card__content">
@@ -89,17 +89,16 @@
     <script src="index.js"></script>
     <script>
       //const trashLoad = () =>{
-        const trashAnchor = document.querySelector('#trashAnchor');
-        const mainSection = document.querySelector('#main');
-        trashAnchor.addEventListener("click", ()=>{
-          //console.log("Hola");
-         mainSection.innerHTML = "";
-         let ContentTrash = DOMHandler("#main");
-         let trashVi = trashView();
-         ContentTrash.load(trashVi);
-        })
+      const trashAnchor = document.querySelector("#trashAnchor");
+      const mainSection = document.querySelector("#main");
+      trashAnchor.addEventListener("click", () => {
+        //console.log("Hola");
+        mainSection.innerHTML = "";
+        let ContentTrash = DOMHandler("#main");
+        let trashVi = trashView();
+        ContentTrash.load(trashVi);
+      });
       //}
-
     </script>
   </body>
 </html>
