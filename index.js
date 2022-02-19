@@ -98,14 +98,14 @@ const Store = (function () {
 function CardsView() {
   const renderCard = (card) => {
     return `
-    <div class="card__content ${card.class}">
+    <div class="card__content ${card.class}" data-id="${card.id}">
       <div class="card__text">
         <p class="heading">${card.title}</p>
         <p>${card.description}</p>
       </div>
       <div class="card__icon">
         <div class="card__icon--custom">
-          <section class="palette__container ds-none">
+          <section class="palette__container ds-none card-palette">
             <div class="palette__color white-bg gray-border"></div>
             <div class="palette__color red-100-bg"></div>
             <div class="palette__color yellow-200-bg"></div>
@@ -117,11 +117,12 @@ function CardsView() {
             <div class="palette__color purple-200-bg"></div>
             <div class="palette__color pink-100-bg"></div>
           </section>
-          <a href="#" class="to-white"
+          <a href="#" class="to-white" id="cardsPalette"
             ><img
               src="assets/icons/palette.svg"
               alt="icon-color"
               class="center"
+              data-id="${card.id}"
           /></a>
         </div>
         <div class="card__icon--custom js-delete" data-id="${card.id}">
@@ -138,25 +139,28 @@ function CardsView() {
     ${Store.cards.map(renderCard).join("")}
   `;
 
-  // const listenPaletteCard = () => {
-  //   const card
-  //   const paletteOpener = document.querySelector(".to-white");
-  //   const palette = document.querySelector(".palette__container");
-  //   paletteOpener.addEventListener("click", () =>
-  //     palette.classList.toggle("ds-none")
-  //   );
-  // };
+  const listenPaletteCard = () => {
+    const cardContainer = document.querySelector(".card-container");
+    const paletteOpenerCards = cardContainer.querySelectorAll("#cardsPalette");
+    // const palette = document.querySelector(".palette__container");
+    paletteOpenerCards.forEach((note) => {
+      note.addEventListener("click", (event) =>{
+        event.preventDefault();
+        const id = event.target.dataset.id;
+        chosenCard = document.querySelector(`[data-id="${id}"]`);
+        console.log(chosenCard);
+        const chosenPalette = chosenCard.querySelector(".palette__container");
+        console.log(chosenPalette);
+        chosenPalette.classList.toggle("ds-none");
+      });}) 
+  };
+
   const listenTrash = () => {
     const trashNotesList = document.querySelectorAll("#superespecial");
     trashNotesList.forEach((Note) => {
       Note.addEventListener("click", (event) => {
         event.preventDefault();
-
         const id = event.target.dataset.id;
-        console.log(id);
-        console.log(event.target);
-        console.log(event.target.dataset.id);
-        // console.log(this);
         Store.trashCard(id);
         Cards.load(CardsView());
       });
@@ -169,7 +173,7 @@ function CardsView() {
       return template
     },
     addListeners() {
-      // listenPaletteCard();
+      listenPaletteCard();
       listenTrash();
     }
   }
@@ -302,7 +306,7 @@ const formView = (function () {
                   <div class="palette__color pink-100-bg"></div>
                 </section>
               
-                <a href="#" class="to-white"
+                <a href="#" class="form-to-white" id="formPalette"
                   ><img
                     src="/assets/icons/palette.svg"
                     alt="icon-color"
@@ -338,7 +342,7 @@ const Layout = (function () {
   `;
 
   const listenPalette = () => {
-    const paletteOpener = document.querySelector(".to-white");
+    const paletteOpener = document.querySelector("#formPalette");
     const palette = document.querySelector(".palette__container");
     paletteOpener.addEventListener("click", () =>
       palette.classList.toggle("ds-none")

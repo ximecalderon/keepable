@@ -40,8 +40,8 @@
   background-color: var(--gray-200);
 }
 
-.to-white:hover,
-.to-white:active {
+.form-to-white:hover,
+.form-to-white:active {
   filter: brightness(0) invert(1);
 }
 
