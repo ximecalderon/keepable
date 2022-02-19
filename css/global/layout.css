@@ -25,7 +25,7 @@ body {
 .main {
   padding: 23px 30px;
   width: calc(100vw - 280px);
-  height: 100vh;
+  height: calc(100vh - 70px);
   position: absolute;
   top: 70px;
   left: 280px;
@@ -38,10 +38,10 @@ body {
 
 .card-container {
   width: 100%;
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, max-content));
   justify-content: center;
-  gap: 20px;
-  flex-wrap: wrap;
+  grid-gap: 20px;
 }
 
 @media (max-width: 880px) {

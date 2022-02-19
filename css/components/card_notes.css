@@ -106,4 +106,12 @@ button {
   .card-container {
     justify-content: center;
   }
-} */
+}
+
+/*Message*/
+.message {
+  color: white;
+  text-align: center;
+  font-size: 36px;
+  line-height: 48px;
+}
