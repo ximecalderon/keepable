@@ -132,9 +132,6 @@ function CardsView() {
         </div>
       </div>     
     </div>
-     <div>
-      <h2 class="heading white" id="nonotes">No notes to keep</h2>
-     </div>
     `;
   }
 
@@ -145,14 +142,10 @@ function CardsView() {
   const hideNotes = () => {
     const cardContainer = document.querySelector(".card-container");
     const cardx = cardContainer.querySelectorAll(".card__content");
-    alert(cardx.length)
     if (cardx.length == 0){
-      containerMessage.innerHTML = "<h1>No notes to keep</h1>"
+      cardContainer.innerHTML = "<h1 class='white'>No notes to keep</h1>"
       h1 = document.querySelector("h1")
       h1.classList.add('heading', 'message')
-    //   document.getElementById("nonotes").style.display = "none";
-    // } else {
-    //   document.getElementById("nonotes").style.visibility = 'visible'
     }
   }
 
