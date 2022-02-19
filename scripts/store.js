@@ -61,6 +61,14 @@ const Store = (function () {
 
       localStorage.setItem("cards", JSON.stringify(this.cards));
     },
+    editCard(id, editedCard) {
+      const card = this.cards.find((card) => card.id == id);
+      card.title = editedCard.title;
+      card.description = editedCard.description;
+      card.class = editedCard.class;
+
+      localStorage.setItem("cards", JSON.stringify(this.cards));
+    },
     trashCard(id) {
       moveObj(id, this.cards, this.trashCards);
 
@@ -84,6 +92,6 @@ const Store = (function () {
       card.class = newClass;
 
       localStorage.setItem("cards", JSON.stringify(this.cards));
-    }
+    }, 
   };
 })();

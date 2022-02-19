@@ -16,6 +16,10 @@
   padding: 20px 20px;
 }
 
+.card__text:hover {
+  cursor: pointer;
+}
+
 .card__icon {
   display: flex;
   justify-content: flex-start;

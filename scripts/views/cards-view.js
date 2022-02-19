@@ -3,8 +3,8 @@ function CardsView() {
     return `
     <div class="card__content ${card.class}" data-id="${card.id}">
       <div class="card__text">
-        <p class="heading">${card.title}</p>
-        <p>${card.description}</p>
+        <p class="heading" data-id="${card.id}">${card.title}</p>
+        <p data-id="${card.id}">${card.description}</p>
       </div>
       <div class="card__icon">
         <div class="card__icon--custom">
@@ -113,6 +113,16 @@ function CardsView() {
     })
   };
 
+  const listenEdit = () => {
+    const cardsContent = document.querySelectorAll(".card__text");
+    const formEdit = document.querySelector("#form-to-edit");
+    cardsContent.forEach((content) => {
+      content.addEventListener("click", (event) => {
+        formEdit.classList.toggle("ds-none");
+      });
+    })
+  };
+
   return {
     toString() {
       return template
@@ -121,6 +131,7 @@ function CardsView() {
       listenPaletteCard();
       listenTrash();
       hideNotes();
+      listenEdit();
     }
   }
 }
