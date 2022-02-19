@@ -101,3 +101,9 @@ button {
   display: flex;
   justify-content: space-between;
 }
+
+@media (max-width: 670px) {
+  .card-container {
+    justify-content: center;
+  }
+}
