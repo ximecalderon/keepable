@@ -146,10 +146,13 @@ function CardsView() {
     const cardContainer = document.querySelector(".card-container");
     const cardx = cardContainer.querySelectorAll(".card__content");
     alert(cardx.length)
-    if (cardx.length > 0){
-      document.getElementById("nonotes").style.display = "none";
-    } else {
-      document.getElementById("nonotes").style.visibility = 'visible'
+    if (cardx.length == 0){
+      containerMessage.innerHTML = "<h1>No notes to keep</h1>"
+      h1 = document.querySelector("h1")
+      h1.classList.add('heading', 'message')
+    //   document.getElementById("nonotes").style.display = "none";
+    // } else {
+    //   document.getElementById("nonotes").style.visibility = 'visible'
     }
   }
 
