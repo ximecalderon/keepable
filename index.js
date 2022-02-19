@@ -90,6 +90,12 @@ const Store = (function () {
       this.trashCards.splice(index, 1);
 
       localStorage.setItem("trashCards", JSON.stringify(this.trashCards));
+    },
+    changeColor(id, newClass) {
+      const card = this.cards.find((card) => card.id == id);
+      card.class = newClass;
+
+      localStorage.setItem("cards", JSON.stringify(this.cards));
     }
   };
 })();
@@ -176,19 +182,13 @@ function CardsView() {
       }
     }
     let cardToChC = document.querySelector(`[data-id="${idCard}"]`);
-    console.log(cardToChC);
-    
+
     paletteOpened.addEventListener("click", function (event) {
       let target = event.target;
       if (target.tagName != 'DIV') return;
       cardToChC.classList.remove(`${cardToChC.classList[cardToChC.classList.length - 1]}`)
       cardToChC.classList.add(`${target.classList[target.classList.length - 1]}`);
-      // for(let obj of Store){ // };
-      Store.initialCards.map((obj) => {
-        let objToChC;
-        if (obj.id == idCard) objToChC = obj;
-        objToChC.class = target.classList[target.classList.length - 1];
-      });
+      Store.changeColor(idCard, target.classList[target.classList.length - 1]);
       paletteOpened.classList.toggle("ds-none");
     });
   };
@@ -212,7 +212,7 @@ function CardsView() {
     addListeners() {
       listenPaletteCard();
       listenTrash();
-      colorSelectorCard();
+      // colorSelectorCard();
     }
   }
 }
