@@ -1,4 +1,7 @@
 function CardsView() {
+  const pinnedCards = Store.cards.filter((card) => card.pin == true);
+  const otherCards = Store.cards.filter((card) => card.pin == false);
+
   const renderCard = (card) => {
     return `
     <div class="card__content ${card.class}" data-id="${card.id}">
@@ -36,10 +39,29 @@ function CardsView() {
       </div>     
     </div>
     `;
-  }
+  };
+
+  const renderPins = () => {
+    if (pinnedCards.length != 0) {
+      return `
+      <div class="pin-section">
+        <h2 class="heading white">PINNED</h2>
+        <div class="card-container">
+          ${pinnedCards.map(renderCard).join("")}
+        </div>
+      </div>
+      `
+    } else return "";
+  };
 
   const template = `
-    ${Store.cards.map(renderCard).join("")}
+      ${renderPins()}
+      <div class="pin-section">
+        <h2 class="heading white">OTHERS</h2>
+        <div class="card-container">
+          ${otherCards.map(renderCard).join("")}
+        </div>
+      </div>
   `;
 
   const hideNotes = () => {
