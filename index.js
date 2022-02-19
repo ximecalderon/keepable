@@ -22,6 +22,13 @@ const Store = (function () {
     };
   })();
 
+  const moveObj = (objID, fromArray, toArray) => {
+    const obj = fromArray.find((obj) => obj.id == objID);
+
+    fromArray.splice(fromArray.indexOf(obj), 1);
+    toArray.push(obj);
+  };
+
   let initialCards = [
     {
       id: idGenerator.next(),
@@ -44,7 +51,7 @@ const Store = (function () {
   ];
 
   /*********************** */
-  const trashCards = [
+  let trashCards = [
     {
       id: idGenerator.next(),
       title: "Note 3",
@@ -70,17 +77,13 @@ const Store = (function () {
       localStorage.setItem("cards", JSON.stringify(this.cards));
     },
     trashCard(id) {
-      const card = this.cards.find((card) => card.id == id);
-      this.cards.splice(this.cards.indexOf(card), 1);
-      this.trashCards.push(card);
+      moveObj(id, this.cards, this.trashCards);
 
       localStorage.setItem("cards", JSON.stringify(this.cards));
       localStorage.setItem("trashCards", JSON.stringify(this.trashCards));
     },
     restoreCard(id) {
-      const trashCard = this.trashCards.find((trashCard) => trashCard.id == id)
-      this.trashCards.splice(this.trashCards.indexOf(trashCard), 1);
-      this.cards.push(trashCard);
+      moveObj(id, this.trashCards, this.cards);
 
       localStorage.setItem("cards", JSON.stringify(this.cards));
       localStorage.setItem("trashCards", JSON.stringify(this.trashCards));
@@ -144,11 +147,11 @@ function CardsView() {
     const paletteOpenerCards = cardContainer.querySelectorAll("#cardsPalette");
     const allPalettes = document.querySelectorAll(".palette__container");
     paletteOpenerCards.forEach((note) => {
-      
-      note.addEventListener("click", (event) =>{
+
+      note.addEventListener("click", (event) => {
         event.preventDefault();
-        for(let singlePalette of allPalettes){
-          if (!(singlePalette.classList[1] == "ds-none") && !(singlePalette.classList[singlePalette.classList.length-1] == "ds-none")) {
+        for (let singlePalette of allPalettes) {
+          if (!(singlePalette.classList[1] == "ds-none") && !(singlePalette.classList[singlePalette.classList.length - 1] == "ds-none")) {
             singlePalette.classList.toggle("ds-none");
           } else {
             continue;
@@ -160,7 +163,7 @@ function CardsView() {
         const chosenPalette = chosenCard.querySelector(".palette__container");
         chosenPalette.classList.toggle("ds-none");
       });
-    }) 
+    })
   };
 
   // const colorSelectorCard = () => {
@@ -213,9 +216,9 @@ const trashView = function () {
     ><img src="assets/icons/trash_gray.svg" alt="icon-trash" data-id="${card.id}"
   /></a>
     </div>
-    <div class="card__icon--custom js-restore" data-id="${card.id}">
-      <a href="#"><img src="assets/icons/arrow.svg" alt="icon-color" 
-      class="center js-delete"></a>
+    <div class="card__icon--custom" data-id="${card.id}">
+      <a href="#" class="js-restore"><img src="assets/icons/arrow.svg" alt="icon-color" 
+      class="center" data-id="${card.id}"></a>
     </div>
   </div>
   </div>`;
@@ -252,19 +255,19 @@ const trashView = function () {
         //ContentTrash.load(trashView());
       });
     })
-    
   };
 
   const restore = () => {
-    const trashView = document.querySelector(".js-restore");
+    const restoreList = document.querySelectorAll(".js-restore");
+    restoreList.forEach((Note) => {
+      Note.addEventListener("click", (event) => {
+        event.preventDefault();
 
-    trashView.addEventListener("click", (event) => {
-      event.preventDefault();
-
-      const id = event.target.dataset.id;
-      Store.restoreCard(id);
-      mainSection.load(trashView())
-    });
+        const id = event.target.dataset.id;
+        Store.restoreCard(id);
+        App.load(trashView())
+      });
+    })
   };
 
   return {
