@@ -3,7 +3,7 @@
   border: 1px solid #999b9e;
 }
 
-/* Background colors */
+/* Background colors for palettes */
 .white-bg {
   background-color: white;
 }
@@ -44,6 +44,19 @@
   background-color: var(--purple-200);
 }
 
+.white-bg,
+.red-100-bg,
+.yellow-100-bg,
+.yellow-200-bg,
+.green-100-bg,
+.cyan-100-bg,
+.blue-100-bg,
+.blue-200-bg,
+.pink-100-bg,
+.purple-200-bg {
+  border-radius: 0.375em;
+}
+
 .white {
   color: #fff;
 }
@@ -54,4 +67,8 @@
 
 .ds-none {
   display: none !important;
+}
+
+.inherit-bc {
+  background-color: inherit;
 }
