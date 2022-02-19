@@ -69,7 +69,7 @@ const Store = (function () {
 })();
 
 // NotesView
-function cardsView() {
+function CardsView() {
   const renderCard = (card) => {
     return  `
     <div class="card__content ${card.class}">
@@ -272,7 +272,7 @@ const Layout = (function () {
       // Cards = DOMHandler(".card-container");
       // mainView = Layout();
       // App.load(mainView);
-      cartas = cardsView();
+      cartas = CardsView();
       Cards.load(cartas);
     });
   };  
@@ -295,8 +295,8 @@ let mainView = Layout();
 App.load(mainView);
 
 let Cards = DOMHandler(".card-container");
-let cartas = CardsView();
-Cards.load(cartas);
-// Cards.load(CardsView());
+// let cartas = CardsView();
+// Cards.load(cartas);
+Cards.load(CardsView());
 
 // Trash View
