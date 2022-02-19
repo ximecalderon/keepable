@@ -105,7 +105,7 @@ function CardsView() {
       </div>
       <div class="card__icon">
         <div class="card__icon--custom">
-          <section class="palette__container ds-none card-palette">
+          <section class="palette__container ds-none card-palette" data-id="${card.id}">
             <div class="palette__color white-bg gray-border"></div>
             <div class="palette__color red-100-bg"></div>
             <div class="palette__color yellow-200-bg"></div>
@@ -117,7 +117,7 @@ function CardsView() {
             <div class="palette__color purple-200-bg"></div>
             <div class="palette__color pink-100-bg"></div>
           </section>
-          <a href="#" class="to-white" id="cardsPalette"
+          <a href="#" class="to-white" id="cardsPalette" data-id="${card.id}"
             ><img
               src="assets/icons/palette.svg"
               alt="icon-color"
@@ -142,18 +142,38 @@ function CardsView() {
   const listenPaletteCard = () => {
     const cardContainer = document.querySelector(".card-container");
     const paletteOpenerCards = cardContainer.querySelectorAll("#cardsPalette");
-    // const palette = document.querySelector(".palette__container");
+    const allPalettes = document.querySelectorAll(".palette__container");
     paletteOpenerCards.forEach((note) => {
+      
       note.addEventListener("click", (event) =>{
         event.preventDefault();
+        for(let singlePalette of allPalettes){
+          if (!(singlePalette.classList[1] == "ds-none") && !(singlePalette.classList[singlePalette.classList.length-1] == "ds-none")) {
+            singlePalette.classList.toggle("ds-none");
+          } else {
+            continue;
+          }
+        }
+
         const id = event.target.dataset.id;
         chosenCard = document.querySelector(`[data-id="${id}"]`);
-        console.log(chosenCard);
         const chosenPalette = chosenCard.querySelector(".palette__container");
-        console.log(chosenPalette);
         chosenPalette.classList.toggle("ds-none");
-      });}) 
+      });
+    }) 
   };
+
+  // const colorSelectorCard = () => {
+  //   const form = document.querySelector("#form");
+  //   const palette = document.querySelector(".palette__container");
+  //   palette.addEventListener("click", function (event) {
+  //     let target = event.target;
+  //     if (target.tagName != 'DIV') return;
+  //     if (form.classList.length != 0) form.classList.remove(`${form.classList[0]}`);
+  //     form.classList.add(`${target.classList[1]}`);
+  //     palette.classList.toggle("ds-none")
+  //   });
+  // };
 
   const listenTrash = () => {
     const trashNotesList = document.querySelectorAll("#superespecial");
@@ -165,7 +185,6 @@ function CardsView() {
         Cards.load(CardsView());
       });
     })
-
   };
 
   return {
