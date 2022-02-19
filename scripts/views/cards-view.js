@@ -10,7 +10,7 @@ function CardsView() {
           <p class="heading">${card.title}</p>
           <p>${card.description}</p>
         </div>
-        <a href="#" class="card__icon--custom" data-id="${card.id}"
+        <a href="#" class="card__icon--custom" data-id="${card.id}" id="js-pin"
           ><img
             src="assets/icons/pin_off.svg"
             alt="icon-color"
@@ -144,6 +144,18 @@ function CardsView() {
     })
   };
 
+  const pinClick = () => {
+    const allPins = document.querySelectorAll("#js-pin");
+    allPins.forEach((Pin) => {
+      Pin.addEventListener("click", (event) => {
+        event.preventDefault();
+        const id = event.target.dataset.id;
+        Store.togglePin(id);
+        Cards.load(CardsView());
+      });
+    })
+  };
+
   return {
     toString() {
       return template
@@ -152,6 +164,7 @@ function CardsView() {
       listenPaletteCard();
       listenTrash();
       hideNotes();
+      pinClick();
     }
   }
 }
