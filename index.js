@@ -11,10 +11,10 @@ function DOMHandler(parentSelector) {
   };
 };
 
-
+// Store
 
 const Store = (function () {
-  const initialCards = [
+  let initialCards = [
     {
       title: "Note 1",
       description: "Desc 1",
@@ -27,74 +27,117 @@ const Store = (function () {
     },
   ];
 
+  let trashCards = [
+    {
+      title: "Note 3",
+      description: "Desc 1",
+      class: "pink-100-bg",
+    }
+  ];
+
   return {
     cards: JSON.parse(localStorage.getItem("cards")) || initialCards,
+    trashCards: JSON.parse(localStorage.getItem("trashCards")) || trashCards,
     createCard(card) {
       this.cards.push(card);
+
       localStorage.setItem("cards", JSON.stringify(this.cards));
     },
-    deleteCard(card) {
-      const index = this.cards.indexOf(card);
-      this.cards.splice(index, 1);
+    trashCard(id) {
+      const card = this.cards.find((card) => card.id == id);
+      this.cards.splice(this.cards.indexOf(card), 1);
+      this.trashCards.push(card);
+
       localStorage.setItem("cards", JSON.stringify(this.cards));
+      localStorage.setItem("trashCards", JSON.stringify(this.trashCards));
+    },
+    restoreCard(id) {
+      const trashCard = this.trashCards.find((trashCard) => trashCard.id == id)
+      this.trashCards.splice(this.trashCards.indexOf(trashCard), 1);
+      this.cards.push(trashCard);
+
+      localStorage.setItem("cards", JSON.stringify(this.cards));
+      localStorage.setItem("trashCards", JSON.stringify(this.trashCards));
+    },
+    deleteCard(id) {
+      const index = this.trashCards.findIndex((trashCard) => trashCard.id == id);
+      this.trashCards.splice(index, 1);
+
+      localStorage.setItem("trashCards", JSON.stringify(this.trashCards));
     },
   };
 })();
 
+// Cards/Notes view
 
-function cardsView() {
+const CardsView = function () {
   const renderCard = (card) => {
-    return `<div class="card__content ${card.class}">
-  <div class="card__text">
-    <p class="heading">${card.title}</p>
-    <p>${card.description}</p>
-  </div>
+    return `
+    <div class="card__content ${card.class}">
+      <div class="card__text">
+        <p class="heading">${card.title}</p>
+        <p>${card.description}</p>
+      </div>
 
-  <div class="card__icon">
-    <div class="card__icon--custom">
-      <a href="#" class="to-white"
-        ><img
-          src="assets/icons/palette.svg"
-          alt="icon-color"
-          class="center"
-      /></a>
+      <div class="card__icon">
+        <div class="card__icon--custom">
+          <a href="#" class="to-white"
+            ><img
+              src="assets/icons/palette.svg"
+              alt="icon-color"
+              class="center"
+          /></a>
+        </div>
+        <div class="card__icon--custom js-delete">
+          <a href="#" class="to-white"
+            ><img src="assets/icons/trash_gray.svg" alt="icon-trash"
+          /></a>
+        </div>
+      </div>
     </div>
-    <div class="card__icon--custom">
-      <a href="#" class="to-white"
-        ><img src="assets/icons/trash_gray.svg" alt="icon-trash"
-      /></a>
-    </div>
-  </div>
-  </div>`
+    `;
   }
 
   const template = `
     ${Store.cards.map(renderCard).join("")}
   `;
 
+  const listenTrash = () => {
+    const trashNotesList = document.querySelector(".js-delete");
+
+    trashNotesList.addEventListener("click", (event) => {
+      event.preventDefault();
+
+      const id = event.target.dataset.id;
+      Store.trashCard(id);
+      Cards.load(CardsView());
+    });
+  };
+
   return {
     toString() {
       return template
     },
-    addListeners(){ 
+    addListeners() {
+      listenTrash();
     }
   }
-}
+};
 
 
 
-const Module = (function() {
+const Module = (function () {
   const template = ``;
 
   return {
     toString() {
       return template
     },
-    addListeners(){}
+    addListeners() { }
   }
 })
 
-const formView = (function() {
+const formView = (function () {
   const template = `
   <form action="" class="#">
           <div class="input__container padding">
@@ -139,23 +182,22 @@ const formView = (function() {
         </form>
   `;
 
-  
+
 
   return {
     toString() {
       return template
     },
-     addListeners(){
-     }
+    addListeners() {
+    }
   }
 })();
 
 
-const Layout = (function() {
+const Layout = (function () {
   const template = `
   ${formView}
-  <section class="card-container">
-  
+  <section class="card-container js-cards">
   </section>
   `;
 
@@ -171,7 +213,7 @@ const Layout = (function() {
     toString() {
       return template
     },
-    addListeners(){
+    addListeners() {
       listenPalette();
     }
   };
@@ -183,7 +225,6 @@ mainView = Layout();
 App.load(mainView);
 
 let Cards = DOMHandler(".card-container");
-const cartas = cardsView();
-Cards.load(cartas);
+Cards.load(CardsView());
 
 
