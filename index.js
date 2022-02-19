@@ -130,14 +130,28 @@ function CardsView() {
             ><img src="assets/icons/trash_gray.svg" alt="icon-trash" data-id="${card.id}"
           /></a>
         </div>
-      </div>
+      </div>     
     </div>
+     <div>
+      <h2 class="heading white" id="nonotes">No notes to keep</h2>
+     </div>
     `;
   }
 
   const template = `
     ${Store.cards.map(renderCard).join("")}
   `;
+
+  const hideNotes = () => {
+    const cardContainer = document.querySelector(".card-container");
+    const cardx = cardContainer.querySelectorAll(".card__content");
+    alert(cardx.length)
+    if (cardx.length > 0){
+      document.getElementById("nonotes").style.display = "none";
+    } else {
+      document.getElementById("nonotes").style.visibility = 'visible'
+    }
+  }
 
   const listenPaletteCard = () => {
     const cardContainer = document.querySelector(".card-container");
@@ -194,6 +208,7 @@ function CardsView() {
     addListeners() {
       listenPaletteCard();
       listenTrash();
+      hideNotes();
     }
   }
 }
