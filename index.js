@@ -151,7 +151,8 @@ function CardsView() {
   const hideNotes = () => {
     const cardContainer = document.querySelector(".card-container");
     const cardx = cardContainer.querySelectorAll(".card__content");
-    if (cardx.length == 0){
+    if (cardx.length == 0) {
+      cardContainer.classList.add('center-vertically')
       cardContainer.innerHTML = "<h1 class='white'>No notes to keep</h1>"
       h1 = document.querySelector("h1")
       h1.classList.add('heading', 'message')
@@ -186,8 +187,8 @@ function CardsView() {
     const allPalettes2 = document.querySelectorAll(".palette__container");
     let idCard;
     let paletteOpened;
-    for(let singlePalette of allPalettes2){
-      if (!(singlePalette.classList[1] == "ds-none") && !(singlePalette.classList[singlePalette.classList.length-1] == "ds-none")) {
+    for (let singlePalette of allPalettes2) {
+      if (!(singlePalette.classList[1] == "ds-none") && !(singlePalette.classList[singlePalette.classList.length - 1] == "ds-none")) {
         idCard = singlePalette.dataset.id;
         paletteOpened = singlePalette;
       } else {
