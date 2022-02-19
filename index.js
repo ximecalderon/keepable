@@ -158,23 +158,24 @@ function CardsView() {
         chosenCard = document.querySelector(`[data-id="${id}"]`);
         const chosenPalette = chosenCard.querySelector(".palette__container");
         chosenPalette.classList.toggle("ds-none");
+        colorSelectorCard();
       });
     }) 
   };
 
   const colorSelectorCard = () => {
     const allPalettes2 = document.querySelectorAll(".palette__container");
-    let id;
+    let idCard;
     let paletteOpened;
     for(let singlePalette of allPalettes2){
       if (!(singlePalette.classList[1] == "ds-none") && !(singlePalette.classList[singlePalette.classList.length-1] == "ds-none")) {
-        id = singlePalette.dataset.id;
+        idCard = singlePalette.dataset.id;
         paletteOpened = singlePalette;
       } else {
         continue;
       }
     }
-    let cardToChC = document.querySelector(`[data-id="${id}"]`);
+    let cardToChC = document.querySelector(`[data-id="${idCard}"]`);
     console.log(cardToChC);
     
     paletteOpened.addEventListener("click", function (event) {
@@ -182,6 +183,13 @@ function CardsView() {
       if (target.tagName != 'DIV') return;
       cardToChC.classList.remove(`${cardToChC.classList[cardToChC.classList.length - 1]}`)
       cardToChC.classList.add(`${target.classList[target.classList.length - 1]}`);
+      // for(let obj of Store){ // };
+      Store.initialCards.map((obj) => {
+        let objToChC;
+        if (obj.id == idCard) objToChC = obj;
+        objToChC.class = target.classList[target.classList.length - 1];
+      });
+      paletteOpened.classList.toggle("ds-none");
     });
   };
 
@@ -204,7 +212,7 @@ function CardsView() {
     addListeners() {
       listenPaletteCard();
       listenTrash();
-      // colorSelectorCard();
+      colorSelectorCard();
     }
   }
 }
