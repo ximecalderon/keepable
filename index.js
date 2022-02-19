@@ -103,7 +103,7 @@ function cardsView() {
       /></a>
     </div>
     <div class="card__icon--custom">
-      <a href="#" class="to-white" data-id="${expense.id}"
+      <a href="#" class="to-white" 
         ><img src="assets/icons/trash_gray.svg" alt="icon-trash"
       /></a>
     </div>
