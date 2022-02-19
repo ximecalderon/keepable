@@ -31,17 +31,17 @@
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.card__icon--custom:hover {
   background-color: var(--white-transparent);
+  margin-bottom: 2px;
 }
 
+.card__icon--custom:hover,
 .card__icon--custom:active {
   background-color: var(--gray-200);
 }
 
-.to-white:active {
+.form-to-white:hover,
+.form-to-white:active {
   filter: brightness(0) invert(1);
 }
 
@@ -102,9 +102,8 @@ button {
   justify-content: space-between;
 }
 
-@media (max-width: 750px) {
-  .card__content {
-    width: 100%;
-    max-width: 600px;
+@media (max-width: 670px) {
+  .card-container {
+    justify-content: center;
   }
 }

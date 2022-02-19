@@ -16,6 +16,7 @@
   color: #fff;
   display: flex;
   gap: 20px;
+  height: 48px;
   padding: 14px 0 14px 20px;
 }
 
@@ -24,7 +25,16 @@
   border-radius: 0px 25px 25px 0px;
 }
 
-@media (max-width: 600px) {
+.trash-icon {
+  width: 25px;
+  height: 24px;
+}
+
+.notes-icon {
+  padding-left: 1px;
+}
+
+@media (max-width: 880px) {
   .aside {
     width: 70px;
   }

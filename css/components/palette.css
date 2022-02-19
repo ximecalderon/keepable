@@ -19,3 +19,8 @@
 .palette__color:hover {
   border: 0.5px solid var(--gray-200);
 }
+
+.card-palette {
+  margin-bottom: 120px;
+  /* margin-right: 120px; */
+}

@@ -14,31 +14,57 @@ function DOMHandler(parentSelector) {
 
 // Store
 const Store = (function () {
+  const idGenerator = (() => {
+    let id = 0;
+
+    return {
+      next: () => ++id,
+    };
+  })();
+
   let initialCards = [
     {
+      id: idGenerator.next(),
       title: "Note 1",
       description: "Desc 1",
       class: "pink-100-bg",
     },
     {
+      id: idGenerator.next(),
       title: "Note 2",
       description: "Desc 2",
       class: "blue-200-bg",
     },
+    {
+      id: idGenerator.next(),
+      title: "Note 7",
+      description: "Desc 7",
+      class: "cyan-100-bg",
+    },
   ];
 
-  let trashCards = [
+  /*********************** */
+  const trashCards = [
     {
+      id: idGenerator.next(),
       title: "Note 3",
-      description: "Desc 1",
+      description: "Desc 3",
       class: "pink-100-bg",
-    }
+    },
+    {
+      id: idGenerator.next(),
+      title: "Note 4",
+      description: "Desc 4",
+      class: "blue-200-bg",
+    },
   ];
+  /*********************** */
 
   return {
     cards: JSON.parse(localStorage.getItem("cards")) || initialCards,
     trashCards: JSON.parse(localStorage.getItem("trashCards")) || trashCards,
     createCard(card) {
+      card.id = idGenerator.next()
       this.cards.push(card);
 
       localStorage.setItem("cards", JSON.stringify(this.cards));
@@ -64,22 +90,22 @@ const Store = (function () {
       this.trashCards.splice(index, 1);
 
       localStorage.setItem("trashCards", JSON.stringify(this.trashCards));
-    },
+    }
   };
 })();
 
 // NotesView
 function CardsView() {
   const renderCard = (card) => {
-    return  `
-    <div class="card__content ${card.class}">
+    return `
+    <div class="card__content ${card.class}" data-id="${card.id}">
       <div class="card__text">
         <p class="heading">${card.title}</p>
         <p>${card.description}</p>
       </div>
       <div class="card__icon">
         <div class="card__icon--custom">
-          <section class="palette__container ds-none">
+          <section class="palette__container ds-none card-palette" data-id="${card.id}">
             <div class="palette__color white-bg gray-border"></div>
             <div class="palette__color red-100-bg"></div>
             <div class="palette__color yellow-200-bg"></div>
@@ -91,16 +117,17 @@ function CardsView() {
             <div class="palette__color purple-200-bg"></div>
             <div class="palette__color pink-100-bg"></div>
           </section>
-          <a href="#" class="to-white"
+          <a href="#" class="to-white" id="cardsPalette" data-id="${card.id}"
             ><img
               src="assets/icons/palette.svg"
               alt="icon-color"
               class="center"
+              data-id="${card.id}"
           /></a>
         </div>
-        <div class="card__icon--custom js-delete">
-          <a href="#" class="to-white"
-            ><img src="assets/icons/trash_gray.svg" alt="icon-trash"
+        <div class="card__icon--custom js-delete" data-id="${card.id}">
+          <a href="#" class="to-white" id="superespecial" 
+            ><img src="assets/icons/trash_gray.svg" alt="icon-trash" data-id="${card.id}"
           /></a>
         </div>
       </div>
@@ -112,23 +139,116 @@ function CardsView() {
     ${Store.cards.map(renderCard).join("")}
   `;
 
-  // const listenPaletteCard = () => {
-  //   const card
-  //   const paletteOpener = document.querySelector(".to-white");
+  const listenPaletteCard = () => {
+    const cardContainer = document.querySelector(".card-container");
+    const paletteOpenerCards = cardContainer.querySelectorAll("#cardsPalette");
+    const allPalettes = document.querySelectorAll(".palette__container");
+    paletteOpenerCards.forEach((note) => {
+      
+      note.addEventListener("click", (event) =>{
+        event.preventDefault();
+        for(let singlePalette of allPalettes){
+          if (!(singlePalette.classList[1] == "ds-none") && !(singlePalette.classList[singlePalette.classList.length-1] == "ds-none")) {
+            singlePalette.classList.toggle("ds-none");
+          } else {
+            continue;
+          }
+        }
+
+        const id = event.target.dataset.id;
+        chosenCard = document.querySelector(`[data-id="${id}"]`);
+        const chosenPalette = chosenCard.querySelector(".palette__container");
+        chosenPalette.classList.toggle("ds-none");
+      });
+    }) 
+  };
+
+  // const colorSelectorCard = () => {
+  //   const form = document.querySelector("#form");
   //   const palette = document.querySelector(".palette__container");
-  //   paletteOpener.addEventListener("click", () =>
+  //   palette.addEventListener("click", function (event) {
+  //     let target = event.target;
+  //     if (target.tagName != 'DIV') return;
+  //     if (form.classList.length != 0) form.classList.remove(`${form.classList[0]}`);
+  //     form.classList.add(`${target.classList[1]}`);
   //     palette.classList.toggle("ds-none")
-  //   );
+  //   });
   // };
+
   const listenTrash = () => {
-    const trashNotesList = document.querySelector(".js-delete");
+    const trashNotesList = document.querySelectorAll("#superespecial");
+    trashNotesList.forEach((Note) => {
+      Note.addEventListener("click", (event) => {
+        event.preventDefault();
+        const id = event.target.dataset.id;
+        Store.trashCard(id);
+        Cards.load(CardsView());
+      });
+    })
+  };
+
+  return {
+    toString() {
+      return template
+    },
+    addListeners() {
+      listenPaletteCard();
+      listenTrash();
+    }
+  }
+}
+
+/************************************ */
+const trashView = function () {
+  const renderCard = (card) => {
+    return `<div class="card__content ${card.class}">
+  <div class="card__text">
+    <p class="heading">${card.title}</p>
+    <p>${card.description}</p>
+  </div>
+
+  <div class="card__icon">
+    <div class="card__icon--custom js-trash" data-id="${card.id}">
+    <a href="#" class="to-white"
+    ><img src="assets/icons/trash_gray.svg" alt="icon-trash"
+  /></a>
+    </div>
+    <div class="card__icon--custom js-restore" data-id="${card.id}">
+      <a href="#"><img src="assets/icons/arrow.svg" alt="icon-color" 
+      class="center js-delete"></a>
+    </div>
+  </div>
+  </div>`;
+  };
+
+
+  const template = `
+    <section class="card-container">
+      ${Store.trashCards.map(renderCard).join("")}
+    </section>
+  `;
+
+  const trashDelete = () => {
+    const trashNotesList = document.querySelector(".js-trash");
 
     trashNotesList.addEventListener("click", (event) => {
       event.preventDefault();
 
       const id = event.target.dataset.id;
-      Store.trashCard(id);
-      Cards.load(CardsView());
+      Store.deleteCard(id);
+      mainSection.load(trashView())
+    });
+  };
+
+  const restore = () => {
+    const trashView = document.querySelector(".js-restore");
+
+    trashView.addEventListener("click", (event) => {
+      event.preventDefault();
+
+      const id = event.target.dataset.id;
+      Store.restoreCard(id);
+      mainSection.load(trashView())
     });
   };
 
@@ -137,24 +257,27 @@ function CardsView() {
       return template
     },
     addListeners() {
-      // listenPaletteCard();
-      listenTrash();
-    }
-  }
-};
+      trashDelete();
+      restore();
+    },
+  };
+}
+
+
+/******************************************* */
 
 // Module for copy/paste
 
-const Module = (function () {
-  const template = ``;
+// const Module = (function () {
+//   const template = ``;
 
-  return {
-    toString() {
-      return template
-    },
-    addListeners() { }
-  }
-})
+//   return {
+//     toString() {
+//       return template
+//     },
+//     addListeners() { }
+//   }
+// })
 
 //Create Input
 // const createInput = ({ id, placeholder = "",  }) => {
@@ -202,7 +325,7 @@ const formView = (function () {
                   <div class="palette__color pink-100-bg"></div>
                 </section>
               
-                <a href="#" class="to-white"
+                <a href="#" class="form-to-white" id="formPalette"
                   ><img
                     src="/assets/icons/palette.svg"
                     alt="icon-color"
@@ -238,7 +361,7 @@ const Layout = (function () {
   `;
 
   const listenPalette = () => {
-    const paletteOpener = document.querySelector(".to-white");
+    const paletteOpener = document.querySelector("#formPalette");
     const palette = document.querySelector(".palette__container");
     paletteOpener.addEventListener("click", () =>
       palette.classList.toggle("ds-none")
@@ -248,12 +371,12 @@ const Layout = (function () {
   const colorSelector = () => {
     const form = document.querySelector("#form");
     const palette = document.querySelector(".palette__container");
-    palette.addEventListener("click", function(event) {
+    palette.addEventListener("click", function (event) {
       let target = event.target;
       if (target.tagName != 'DIV') return;
       if (form.classList.length != 0) form.classList.remove(`${form.classList[0]}`);
-      form.classList.add(`${target.classList[1]}`);  
-      palette.classList.toggle("ds-none")  
+      form.classList.add(`${target.classList[1]}`);
+      palette.classList.toggle("ds-none")
     });
   };
 
@@ -275,7 +398,7 @@ const Layout = (function () {
       cartas = CardsView();
       Cards.load(cartas);
     });
-  };  
+  };
 
   return {
     toString() {
@@ -295,8 +418,8 @@ let mainView = Layout();
 App.load(mainView);
 
 let Cards = DOMHandler(".card-container");
-// let cartas = CardsView();
-// Cards.load(cartas);
 Cards.load(CardsView());
 
-// Trash View
+//let ContentTrash = DOMHandler(".card-container");
+//const trashVi = trashView();
+//ContentTrash.load(trashVi);
