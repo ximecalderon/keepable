@@ -208,9 +208,9 @@ const trashView = function () {
   </div>
 
   <div class="card__icon">
-    <div class="card__icon--custom js-trash" data-id="${card.id}">
-    <a href="#" class="to-white"
-    ><img src="assets/icons/trash_gray.svg" alt="icon-trash"
+    <div class="card__icon--custom js-trash">
+    <a href="#" class="to-white" id="js-trashs"
+    ><img src="assets/icons/trash_gray.svg" alt="icon-trash" data-id="${card.id}"
   /></a>
     </div>
     <div class="card__icon--custom js-restore" data-id="${card.id}">
@@ -229,15 +229,30 @@ const trashView = function () {
   `;
 
   const trashDelete = () => {
-    const trashNotesList = document.querySelector(".js-trash");
-
-    trashNotesList.addEventListener("click", (event) => {
-      event.preventDefault();
-
-      const id = event.target.dataset.id;
-      Store.deleteCard(id);
-      mainSection.load(trashView())
-    });
+    const trashNotes = document.querySelectorAll("#js-trashs");
+    const containerMessage = document.querySelector(".card-container");
+    console.log(trashNotes.length);
+    console.log(containerMessage);
+    if(trashNotes.length == 0) {
+      containerMessage.innerHTML = "<h1>No notes to keep</h1>"
+      h1 = document.querySelector("h1")
+      h1.classList.add('heading', 'message')
+      console.log(h1)
+    }
+    trashNotes.forEach((Note) => {
+      Note.addEventListener("click", (event) => {
+        event.preventDefault();
+  
+        const id = event.target.dataset.id;
+        console.log(id);
+        console.log(event.target);
+        console.log(event.target.dataset.id);
+        Store.deleteCard(id);
+        App.load(trashView());
+        //ContentTrash.load(trashView());
+      });
+    })
+    
   };
 
   const restore = () => {
