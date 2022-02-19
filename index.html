@@ -19,86 +19,23 @@
     </header>
     <section class="higher-section">
       <aside class="aside">
-        <a href="index.html" class="aside-link" id="notesAnchor">
-          <img src="assets/icons/notes.svg" class="notes-icon" />
-          <p class="aside-title">Notes</p>
-        </a>
-        <a href="#" class="aside-link" id="trashAnchor">
-          <img src="assets/icons/trash.svg" class="trash-icon" />
-          <p class="aside-title">Trash</p>
-        </a>
+        <!-- sidebar options render here -->
       </aside>
       <main id="main" class="main">
-        <!-- <form action="" class="#">
-          <div class="input__container padding">
-            <div class="full-width">
-              <input
-                type="text"
-                placeholder="Title"
-                class="input__content heading"
-              />
-              <input
-                type="text"
-                placeholder="Take a note..."
-                class="input__content"
-              />
-            </div>
-            <div class="card__footer full-width">
-              <div class="card__icon--custom">
-                <a href="#" class="to-white"
-                  ><img
-                    src="/assets/icons/palette.svg"
-                    alt="icon-color"
-                    class="center"
-                /></a>
-              </div>
-              <!-- <div> -->
-        <!-- <button type="submit" class="button__custom">Keep it!</button> -->
-        <!-- </div> -->
-        <!-- </div> -->
-        <!-- </div> -->
-        <!-- </form> -->
-        -->
-
-        <!-- <section class="card-container">
-          <div class="card__content">
-            <div class="card__text">
-              <p class="heading">This is the titile</p>
-              <p>This is the body for the note</p>
-            </div>
-
-            <div class="card__icon">
-              <div class="card__icon--custom">
-                <a href="#" class="to-white"
-                  ><img
-                    src="assets/icons/palette.svg"
-                    alt="icon-color"
-                    class="center"
-                /></a>
-              </div>
-              <div class="card__icon--custom">
-                <a href="#" class="to-white"
-                  ><img src="assets/icons/trash_gray.svg" alt="icon-trash"
-                /></a>
-              </div>
-            </div>
-          </div>
-        </section> -->
+        <!-- view scripts load here -->
       </main>
     </section>
-    <script src="index.js"></script>
-    <script>
-      //const trashLoad = () =>{
-      const trashAnchor = document.querySelector("#trashAnchor");
-      const mainSection = document.querySelector("#main");
-      trashAnchor.addEventListener("click", () => {
-        //console.log("Hola");
-        mainSection.innerHTML = "";
-        let ContentTrash = DOMHandler("#main");
-        let trashVi = trashView();
-        ContentTrash.load(trashVi);
-      });
-      //}
-    </script>
+
+    <script src="scripts/dom-handler.js"></script>
+    <script src="scripts/store.js"></script>
+
+    <script src="scripts/partials/sidebar.js"></script>
+
+    <script src="scripts/views/layout.js"></script>
+    <script src="scripts/views/form-view.js"></script>
+    <script src="scripts/views/cards-view.js"></script>
+    <script src="scripts/views/trash-view.js"></script>
+
+    <script src="scripts/index.js"></script>
   </body>
 </html>
