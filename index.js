@@ -24,11 +24,13 @@ const Store = (function () {
 
   let initialCards = [
     {
+      id: idGenerator.next(),
       title: "Note 1",
       description: "Desc 1",
       class: "pink-100-bg",
     },
     {
+      id: idGenerator.next(),
       title: "Note 2",
       description: "Desc 2",
       class: "blue-200-bg",
@@ -38,13 +40,13 @@ const Store = (function () {
   /*********************** */
   const trashCards = [
     { 
-      //id: idGenerator.next(),
+      id: idGenerator.next(),
       title: "Note 3",
       description: "Desc 3",
       class: "pink-100-bg",
     },
     {
-      //id: idGenerator.next(),
+      id: idGenerator.next(),
       title: "Note 4",
       description: "Desc 4",
       class: "blue-200-bg",
@@ -56,6 +58,7 @@ const Store = (function () {
     cards: JSON.parse(localStorage.getItem("cards")) || initialCards,
     trashCards: JSON.parse(localStorage.getItem("trashCards")) || trashCards,
     createCard(card) {
+      card.id = idGenerator.next() 
       this.cards.push(card);
 
       localStorage.setItem("cards", JSON.stringify(this.cards));
@@ -84,17 +87,17 @@ const Store = (function () {
     },
 
   /******************************** */
-    trashs: JSON.parse(localStorage.getItem("trashs")) || trashsCards,
-    createTrash(trash) {
-      this.trashs.push(trash);
-      localStorage.setItem("trashs", JSON.stringify(this.trashs));
-    },
+    // trash: JSON.parse(localStorage.getItem("trash")) || trashCards,
+    // createTrash(trash) {
+    //   this.trash.push(trash);
+    //   localStorage.setItem("trash", JSON.stringify(this.trash));
+    // },
 
-    deleteTrash(trash) {
-      const index = this.cards.indexOf(trash);
-      this.trashs.splice(index, 1);
-      localStorage.setItem("trashs", JSON.stringify(this.cards));
-    },
+    // deleteTrash(trash) {
+    //   const index = this.cards.indexOf(trash);
+    //   this.trash.splice(index, 1);
+    //   localStorage.setItem("trash", JSON.stringify(this.cards));
+    // },
 
   /******************************** */
   };
@@ -200,7 +203,7 @@ const trashView = function (){
   
 
   const template = `
-    ${Store.trashs.map(renderCard).join("")}
+    ${Store.trashCards.map(renderCard).join("")}
   `;
 
   const trashDelete = () => {
@@ -230,16 +233,16 @@ const trashView = function (){
 
 // Module for copy/paste
 
-const Module = (function () {
-  const template = ``;
+// const Module = (function () {
+//   const template = ``;
 
-  return {
-    toString() {
-      return template
-    },
-    addListeners() { }
-  }
-})
+//   return {
+//     toString() {
+//       return template
+//     },
+//     addListeners() { }
+//   }
+// })
 
 //Create Input
 // const createInput = ({ id, placeholder = "",  }) => {
@@ -380,7 +383,9 @@ let mainView = Layout();
 App.load(mainView);
 
 let Cards = DOMHandler(".card-container");
-// let cartas = CardsView();
-// Cards.load(cartas);
-Cards.load(CardsView());
+let cartas = CardsView();
+Cards.load(cartas);
 
+//let ContentTrash = DOMHandler(".card-container");
+//const trashVi = trashView();
+//ContentTrash.load(trashVi);
