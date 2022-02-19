@@ -35,6 +35,12 @@ const Store = (function () {
       description: "Desc 2",
       class: "blue-200-bg",
     },
+    {
+      id: idGenerator.next(),
+      title: "Note 7",
+      description: "Desc 7",
+      class: "cyan-100-bg",
+    },
   ];
 
   /*********************** */
@@ -119,8 +125,8 @@ function CardsView() {
           /></a>
         </div>
         <div class="card__icon--custom js-delete" data-id="${card.id}">
-          <a href="#" class="to-white"
-            ><img src="assets/icons/trash_gray.svg" alt="icon-trash"
+          <a href="#" class="to-white" id="superespecial" 
+            ><img src="assets/icons/trash_gray.svg" alt="icon-trash" data-id="${card.id}"
           /></a>
         </div>
       </div>
@@ -141,15 +147,21 @@ function CardsView() {
   //   );
   // };
   const listenTrash = () => {
-    const trashNotesList = document.querySelector(".js-delete");
-
-    trashNotesList.addEventListener("click", (event) => {
-      event.preventDefault();
-
-      const id = event.target.dataset.id;
-      Store.trashCard(id);
-      Cards.load(CardsView());
-    });
+    const trashNotesList = document.querySelectorAll("#superespecial");
+    trashNotesList.forEach((Note) => {
+      Note.addEventListener("click", (event) => {
+        event.preventDefault();
+        
+        const id = event.target.dataset.id;
+        console.log(id);
+        console.log(event.target);
+        console.log(event.target.dataset.id);
+        // console.log(this);
+        Store.trashCard(id);
+        Cards.load(CardsView());
+      });
+    })
+    
   };
 
   return {
