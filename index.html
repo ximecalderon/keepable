@@ -26,7 +26,7 @@
       </main>
       
     </section>
-    <form action="" class="white-bg ds-none" id="form-to-edit" style="margin: 1000px 0 0 330px;">
+    <form action="" class="ds-none white-bg" id="form-to-edit" style="margin: 1000px 0 0 330px;">
       <div class="input__container padding">
         <div class="full-width">
           <input
@@ -90,13 +90,14 @@
           const editedCard = {
             title: title.value,
             description: description.value,
-            class: form.classList[0],
+            class: formEdit.classList[0],
           };
 
-          console.log(editedCard);
+          console.log(formEdit.classList[0]);
           Store.editCard(1, editedCard);
           cartas = CardsView();
           Cards.load(cartas);
+          formEdit.classList.toggle("ds-none");
         });
       };
       submitListener();

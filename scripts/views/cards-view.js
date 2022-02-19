@@ -2,7 +2,7 @@ function CardsView() {
   const renderCard = (card) => {
     return `
     <div class="card__content ${card.class}" data-id="${card.id}">
-      <div class="card__text">
+      <div class="card__text" data-id="${card.id}">
         <p class="heading" data-id="${card.id}">${card.title}</p>
         <p data-id="${card.id}">${card.description}</p>
       </div>
@@ -113,11 +113,18 @@ function CardsView() {
     })
   };
 
+  
+
   const listenEdit = () => {
     const cardsContent = document.querySelectorAll(".card__text");
     const formEdit = document.querySelector("#form-to-edit");
     cardsContent.forEach((content) => {
       content.addEventListener("click", (event) => {
+        let idCardToEd = event.target.dataset.id;
+        let cardToEd = document.querySelector(`[data-id="${idCardToEd}"]`);
+        formEdit.classList.remove(`${formEdit.classList[1]}`)
+        formEdit.classList.add(`${cardToEd.classList[1]}`);
+        console.log(cardToEd.classList[1]);
         formEdit.classList.toggle("ds-none");
       });
     })
