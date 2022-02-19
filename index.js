@@ -234,25 +234,24 @@ const trashView = function () {
   const trashDelete = () => {
     const trashNotes = document.querySelectorAll("#js-trashs");
     const containerMessage = document.querySelector(".card-container");
-    console.log(trashNotes.length);
-    console.log(containerMessage);
-    if(trashNotes.length == 0) {
-      containerMessage.innerHTML = "<h1>No notes to keep</h1>"
+
+    if (trashNotes.length == 0) {
+      containerMessage.classList.add('center-vertically')
+      containerMessage.innerHTML = "<h1>No notes in trash</h1>"
       h1 = document.querySelector("h1")
       h1.classList.add('heading', 'message')
-      console.log(h1)
     }
+
     trashNotes.forEach((Note) => {
       Note.addEventListener("click", (event) => {
         event.preventDefault();
-  
+
         const id = event.target.dataset.id;
         console.log(id);
         console.log(event.target);
         console.log(event.target.dataset.id);
         Store.deleteCard(id);
         App.load(trashView());
-        //ContentTrash.load(trashView());
       });
     })
   };

@@ -72,3 +72,7 @@
 .inherit-bc {
   background-color: inherit;
 }
+
+.center-vertically {
+  margin: auto;
+}
