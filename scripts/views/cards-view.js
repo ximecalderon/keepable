@@ -129,8 +129,6 @@ function CardsView() {
  
         Cards.load(CardsView());
         document.location.reload();
-
-        // formEdit.classList.toggle("ds-none");
       });
     };
 
@@ -140,8 +138,10 @@ function CardsView() {
     
     cardsContent.forEach((content) => {
       content.addEventListener("click", (event) => {
+        
         let idCardToEd = event.target.dataset.id;
         let cardToEd = document.querySelector(`[data-id="${idCardToEd}"]`);
+        EditOverlay.load(EditView(cardToEd));
         formEdit.classList.remove(`${formEdit.classList[1]}`)
         formEdit.classList.add(`${cardToEd.classList[1]}`);
         console.log(cardToEd.classList[1]);

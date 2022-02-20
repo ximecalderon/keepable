@@ -7,3 +7,5 @@ Sidebar.load(sidebarRender());
 
 let Cards = DOMHandler(".card-container");
 Cards.load(CardsView());
+
+let EditOverlay = DOMHandler(".js-edit-view");

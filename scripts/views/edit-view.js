@@ -1,7 +1,7 @@
-function EditView() {
+function EditView(card) {
   const renderForm = () => {
     return `
-    <form action="" class="ds-none white-bg" id="form-to-edit" style="margin: 1000px 0 0 330px;">
+    <form action="" class=" edit-form white-bg" id="form-to-edit" style="margin:1000px 0 330px 0;">
     <div class="input__container padding">
       <div class="full-width">
         <input
@@ -47,64 +47,17 @@ function EditView() {
   };
 
   const template = `
-        ${renderForm}
+  <div class="edit-bg">
+    ${renderForm()}
+  </div>
   `;
 
-  let submitListener = (idToEdit) => {
-    let formEdit = document.querySelector("#form-to-edit");
-      formEdit.addEventListener("submit", (event) => {
-        event.preventDefault();
-        let { title, description } = event.target.elements;
-        let editedCard = {
-          title: title.value,
-          description: description.value,
-          class: formEdit.classList[0],
-        };
-
-        console.log(formEdit.classList[0]);
-        Store.editCard(idToEdit, editedCard);
- 
-        // Sidebar.load(sidebarRender());
-        Cards.load(CardsView());
-
-        formEdit.classList.toggle("ds-none");
-        // cartas = CardsView();
-        // let mainView = Layout();
-      });
-    };
-
-  let listenEdit = () => {
-    
-    let cardsContent = document.querySelectorAll(".card__text");
-    let formEdit = document.querySelector("#form-to-edit");
-    console.log("sddassdasdas");
-    cardsContent.forEach((content) => {
-      content.addEventListener("click", (event) => {
-        console.log("sddassdasdas");
-
-
-        // let App2 = DOMHandler("#body");
-        // let formToEditRender = EditView();
-        // App2.load(formToEditRender);
-
-
-        // let idCardToEd = event.target.dataset.id;
-        // let cardToEd = document.querySelector(`[data-id="${idCardToEd}"]`);
-        // formEdit.classList.remove(`${formEdit.classList[1]}`)
-        // formEdit.classList.add(`${cardToEd.classList[1]}`);
-        // console.log(cardToEd.classList[1]);
-        // formEdit.classList.toggle("ds-none");
-        // submitListener(idCardToEd);
-      });
-    })
-  };
 
   return {
     toString() {
       return template
     },
     addListeners() {
-      listenEdit();
     }
   }
 }

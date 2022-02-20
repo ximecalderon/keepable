@@ -7,26 +7,29 @@
     <title>Keepable</title>
   </head>
   <body id="body">
-    <header class="header">
-      <img
-        class="logo-img"
-        src="assets/img/keepable-logo.png"
-        alt="keepable-logo"
-      />
-      <div class="header-text__container">
-        <p class="heading white">Welcome to {keepable}</p>
-      </div>
-    </header>
-    <section class="higher-section">
-      <aside class="aside">
-        <!-- sidebar options render here -->
-      </aside>
-      <main id="main" class="main">
-        <!-- view scripts load here -->
-      </main>
-      
-    </section>
-    <form action="" class="ds-none white-bg" id="form-to-edit" style="margin: 1000px 0 0 330px;">
+    <div>
+      <header class="header">
+        <img
+          class="logo-img"
+          src="assets/img/keepable-logo.png"
+          alt="keepable-logo"
+        />
+        <div class="header-text__container">
+          <p class="heading white">Welcome to {keepable}</p>
+        </div>
+      </header>
+      <section class="higher-section">
+        <aside class="aside">
+          <!-- sidebar options render here -->
+        </aside>
+        <main id="main" class="main">
+          <!-- view scripts load here -->
+        </main>
+        
+      </section>
+    </div>
+    <div class="js-edit-view"></div>
+    <!-- <form action="" class="ds-none white-bg" id="form-to-edit" style="margin: 1000px 0 0 330px;">
       <div class="input__container padding">
         <div class="full-width">
           <input
@@ -67,7 +70,7 @@
           <button type="submit" class="button__custom inherit-bc">Keep it!</button>
         </div>
       </div>
-    </form>
+    </form> -->
     <script src="scripts/dom-handler.js"></script>
     <script src="scripts/store.js"></script>
 
@@ -77,50 +80,8 @@
     <script src="scripts/views/form-view.js"></script>
     <script src="scripts/views/cards-view.js"></script>
     <script src="scripts/views/trash-view.js"></script>
+    <script src="scripts/views/edit-view.js"></script>
     
     <script src="scripts/index.js"></script>
-    <!-- <script src="scripts/views/edit-view.js"></script> -->
-    <!-- <script>
-  let submitListener = (idToEdit) => {
-    let formEdit = document.querySelector("#form-to-edit");
-      formEdit.addEventListener("submit", (event) => {
-        event.preventDefault();
-        let { title, description } = event.target.elements;
-        let editedCard = {
-          title: title.value,
-          description: description.value,
-          class: formEdit.classList[0],
-        };
-
-        console.log(formEdit.classList[0]);
-        Store.editCard(idToEdit, editedCard);
-        // App.load(Layout());
-        // Sidebar.load(sidebarRender());
-        Cards.load(CardsView());
-
-        formEdit.classList.toggle("ds-none");
-        // cartas = CardsView();
-        // let mainView = Layout();
-      });
-    };
-
-  let listenEdit = () => {
-    let cardsContent = document.querySelectorAll(".card__text");
-    let formEdit = document.querySelector("#form-to-edit");
-    
-    cardsContent.forEach((content) => {
-      content.addEventListener("click", (event) => {
-        let idCardToEd = event.target.dataset.id;
-        let cardToEd = document.querySelector(`[data-id="${idCardToEd}"]`);
-        formEdit.classList.remove(`${formEdit.classList[1]}`)
-        formEdit.classList.add(`${cardToEd.classList[1]}`);
-        console.log(cardToEd.classList[1]);
-        formEdit.classList.toggle("ds-none");
-        submitListener(idCardToEd);
-      });
-    })
-  };
-  listenEdit();
-    </script> -->
   </body>
 </html>
