@@ -1,18 +1,20 @@
 function EditView(card) {
   const renderForm = () => {
     return `
-    <form action="" class=" edit-form white-bg" id="form-to-edit" style="margin:1000px 0 330px 0;">
+    <form action="" class=" edit-form ${card.class}" id="form-to-edit" style="margin:1000px 0 330px 0;">
     <div class="input__container padding">
       <div class="full-width">
         <input
           id="title"
           type="text"
+          value="${card.title}"
           placeholder="Title"
           class="input__content heading inherit-bc"
         />
         <input
           id="description"
           type="text"
+          value="${card.description}"
           placeholder="Take a note..."
           class="input__content inherit-bc"
         />
