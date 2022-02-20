@@ -10,7 +10,7 @@ function CardsView() {
           <p class="heading">${card.title}</p>
           <p>${card.description}</p>
         </div>
-        <a href="#" class="card__icon--custom" data-id="${card.id}" id="js-pin"
+        <a href="#" class="" data-id="${card.id}" id="js-pin"
           ><img
             src="assets/icons/pin_off.svg"
             alt="icon-color"
@@ -66,7 +66,7 @@ function CardsView() {
   const template = `
       ${renderPins()}
       <div class="pin-section">
-        <h2 class="heading white">OTHERS</h2>
+        <h2 class="heading white other">OTHERS</h2>
         <div class="card-container">
           ${otherCards.map(renderCard).join("")}
         </div>
@@ -76,12 +76,15 @@ function CardsView() {
   const hideNotes = () => {
     const cardContainer = document.querySelector(".card-container");
     const cardx = cardContainer.querySelectorAll(".card__content");
+    let other = document.querySelector(".other");
+    console.log(other)
     if (cardx.length == 0) {
+      other.innerHTML = " "
       cardContainer.classList.add('center-vertically')
       cardContainer.innerHTML = "<h1 class='white'>No notes to keep</h1>"
       h1 = document.querySelector("h1")
       h1.classList.add('heading', 'message')
-    }
+    } 
   }
 
   const listenPaletteCard = () => {
