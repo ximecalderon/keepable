@@ -1,7 +1,7 @@
 function EditView(card) {
   const renderForm = () => {
     return `
-    <form action="" class=" edit-form ${card.class}" id="form-to-edit" style="margin:1000px 0 330px 0;">
+    <form action="" class=" edit-form ${card.class}" id="form-to-edit">
     <div class="input__container padding">
       <div class="full-width">
         <input

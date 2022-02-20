@@ -13,5 +13,6 @@
 
 .edit-form {
   position: fixed;
+  box-shadow: var(--shadow-white);
   z-index: 999;
 }
