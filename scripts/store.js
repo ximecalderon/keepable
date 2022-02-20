@@ -20,18 +20,21 @@ const Store = (function () {
       title: "Note 1",
       description: "Desc 1",
       class: "pink-100-bg",
+      pin: true,
     },
     {
       id: idGenerator.next(),
       title: "Note 2",
       description: "Desc 2",
       class: "blue-200-bg",
+      pin: false,
     },
     {
       id: idGenerator.next(),
       title: "Note 7",
       description: "Desc 7",
       class: "cyan-100-bg",
+      pin: false,
     },
   ];
 
@@ -42,12 +45,14 @@ const Store = (function () {
       title: "Note 3",
       description: "Desc 3",
       class: "pink-100-bg",
+      pin: true,
     },
     {
       id: idGenerator.next(),
       title: "Note 4",
       description: "Desc 4",
       class: "blue-200-bg",
+      pin: false,
     },
   ];
   /*********************** */
@@ -92,6 +97,12 @@ const Store = (function () {
       card.class = newClass;
 
       localStorage.setItem("cards", JSON.stringify(this.cards));
-    }, 
+    },
+    togglePin(id) {
+      const card = this.cards.find((card) => card.id == id);
+      card.pin = !card.pin;
+
+      localStorage.setItem("cards", JSON.stringify(this.cards));
+    }
   };
 })();

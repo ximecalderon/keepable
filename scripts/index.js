@@ -5,7 +5,7 @@ App.load(mainView);
 let Sidebar = DOMHandler(".aside");
 Sidebar.load(sidebarRender());
 
-let Cards = DOMHandler(".card-container");
+let Cards = DOMHandler(".card-section");
 Cards.load(CardsView());
 
 let EditOverlay = DOMHandler(".js-edit-view");

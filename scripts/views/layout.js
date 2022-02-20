@@ -1,7 +1,7 @@
 const Layout = (function () {
   const template = `
   ${formView}
-  <section class="card-container js-cards">
+  <section class="card-section js-cards">
   </section>
   `;
 
@@ -34,7 +34,8 @@ const Layout = (function () {
       const newCard = {
         title: title.value,
         description: description.value,
-        class: form.classList[0]
+        class: form.classList[0],
+        pin: false,
       }
 
       Store.createCard(newCard);
