@@ -6,25 +6,29 @@
     <link rel="stylesheet" href="css/style.css" />
     <title>Keepable</title>
   </head>
-  <body>
-    <header class="header">
-      <img
-        class="logo-img"
-        src="assets/img/keepable-logo.png"
-        alt="keepable-logo"
-      />
-      <div class="header-text__container">
-        <p class="heading white">Welcome to {keepable}</p>
-      </div>
-    </header>
-    <section class="higher-section">
-      <aside class="aside">
-        <!-- sidebar options render here -->
-      </aside>
-      <main id="main" class="main">
-        <!-- view scripts load here -->
-      </main>
-    </section>
+  <body id="body">
+    <div>
+      <header class="header">
+        <img
+          class="logo-img"
+          src="assets/img/keepable-logo.png"
+          alt="keepable-logo"
+        />
+        <div class="header-text__container">
+          <p class="heading white">Welcome to {keepable}</p>
+        </div>
+      </header>
+      <section class="higher-section">
+        <aside class="aside">
+          <!-- sidebar options render here -->
+        </aside>
+        <main id="main" class="main">
+          <!-- view scripts load here -->
+        </main>
+        
+      </section>
+    </div>
+    <div class="js-edit-view"></div>
 
     <script src="scripts/dom-handler.js"></script>
     <script src="scripts/store.js"></script>
@@ -35,7 +39,8 @@
     <script src="scripts/views/form-view.js"></script>
     <script src="scripts/views/cards-view.js"></script>
     <script src="scripts/views/trash-view.js"></script>
-
+    <script src="scripts/views/edit-view.js"></script>
+    
     <script src="scripts/index.js"></script>
   </body>
 </html>

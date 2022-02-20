@@ -21,6 +21,10 @@
   padding: 20px 20px;
 }
 
+.card__text:hover {
+  cursor: pointer;
+}
+
 .card__icon {
   display: flex;
   justify-content: flex-start;
@@ -62,7 +66,7 @@
 
 .input__container,
 .select__input {
-  border: 1px solid var(--gray-200);
+  /* border: 1px solid var(--gray-200); */
   padding: 0.5em 0.75em;
   border-radius: 0.375em;
   display: flex;
