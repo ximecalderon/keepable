@@ -63,33 +63,36 @@ function CardsView() {
     } else return "";
   };
 
-  const template = `
-      ${renderPins()}
+  const renderOthers = () => {
+    if (otherCards.length != 0) {
+      return `
       <div class="pin-section">
-        <h2 class="heading white other">OTHERS</h2>
+        <h2 class="heading white">OTHERS</h2>
         <div class="card-container">
           ${otherCards.map(renderCard).join("")}
         </div>
       </div>
+      `
+    } else return "";
+  };
+
+  const template = `
+      ${renderPins()}
+      ${renderOthers()}
   `;
 
   const hideNotes = () => {
-    const cardContainer = document.querySelector(".card-container");
-    const cardx = cardContainer.querySelectorAll(".card__content");
-    let other = document.querySelector(".other");
-    console.log(other)
-    if (cardx.length == 0) {
-      other.innerHTML = " "
-      cardContainer.classList.add('center-vertically')
-      cardContainer.innerHTML = "<h1 class='white'>No notes to keep</h1>"
-      h1 = document.querySelector("h1")
-      h1.classList.add('heading', 'message')
-    } 
+    const container = document.querySelector(".js-cards")
+    if (Store.cards.length == 0) {
+      container.classList.add('center-vertically', 'full-height-main')
+      container.innerHTML = "<h1 class='white heading message'>No notes to keep</h1>"
+    } else {
+      container.classList.remove('center-vertically', 'full-height-main')
+    }
   }
 
   const listenPaletteCard = () => {
-    const cardContainer = document.querySelector(".card-container");
-    const paletteOpenerCards = cardContainer.querySelectorAll("#cardsPalette");
+    const paletteOpenerCards = document.querySelectorAll("#cardsPalette");
     const allPalettes = document.querySelectorAll(".palette__container");
     paletteOpenerCards.forEach((note) => {
 

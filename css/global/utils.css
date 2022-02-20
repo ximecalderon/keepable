@@ -74,9 +74,21 @@
 }
 
 .center-vertically {
-  margin: auto;
+  justify-content: center;
 }
 
 .padding-9 {
   padding: 9px;
+}
+
+.full-height {
+  height: calc(100vh - 150px);
+}
+
+.full-height-main {
+  height: calc(100vh - 400px);
+}
+
+.centered {
+  margin: auto;
 }
