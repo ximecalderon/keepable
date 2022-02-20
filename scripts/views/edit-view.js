@@ -54,12 +54,34 @@ function EditView(card) {
   </div>
   `;
 
+  const listenPaletteEditForm = () => {
+    const formToEdit = document.querySelector("#form-to-edit");
+    const paletteOpener = formToEdit.querySelector("#formPalette");
+    const palette = formToEdit.querySelector(".palette__container");
+    paletteOpener.addEventListener("click", () =>
+      palette.classList.toggle("ds-none")
+    );
+  };
+
+  const colorSelectorEditForm = () => {
+    const formEd = document.querySelector("#form-to-edit");
+    const paletteEd = formEd.querySelector(".palette__container");
+    paletteEd.addEventListener("click", function (event) {
+      let target = event.target;
+      if (target.tagName != 'DIV') return;
+      if (formEd.classList.length != 0) formEd.classList.remove(`${formEd.classList[0]}`);
+      formEd.classList.add(`${target.classList[1]}`);
+      paletteEd.classList.toggle("ds-none");
+    });
+  };
 
   return {
     toString() {
       return template
     },
     addListeners() {
+      listenPaletteEditForm();
+      colorSelectorEditForm();
     }
   }
 }
