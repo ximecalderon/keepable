@@ -32,10 +32,10 @@ const trashView = function () {
     const containerMessage = document.querySelector(".card-container");
 
     if (trashNotes.length == 0) {
-      containerMessage.classList.add('center-vertically')
-      containerMessage.innerHTML = "<h1>No notes in trash</h1>"
-      h1 = document.querySelector("h1")
-      h1.classList.add('heading', 'message')
+      containerMessage.classList.add("full-height")
+      containerMessage.innerHTML = "<h1 class='content-lg white centered'>No notes in trash</h1>"
+    } else {
+      containerMessage.classList.remove("full-height")
     }
 
     trashNotes.forEach((Note) => {

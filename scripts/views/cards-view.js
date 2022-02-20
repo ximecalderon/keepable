@@ -1,10 +1,22 @@
 function CardsView() {
+  const pinnedCards = Store.cards.filter((card) => card.pin == true);
+  const otherCards = Store.cards.filter((card) => card.pin == false);
+
   const renderCard = (card) => {
     return `
     <div class="card__content ${card.class}" data-id="${card.id}">
-      <div class="card__text">
-        <p class="heading">${card.title}</p>
-        <p>${card.description}</p>
+      <div class="card__body">
+        <div class="card__text">
+          <p class="heading">${card.title}</p>
+          <p>${card.description}</p>
+        </div>
+        <a href="#" class="" data-id="${card.id}" id="js-pin"
+          ><img
+            src="assets/icons/pin_off.svg"
+            alt="icon-color"
+            class="center padding-9"
+            data-id="${card.id}"
+        /></a>
       </div>
       <div class="card__icon">
         <div class="card__icon--custom">
@@ -36,26 +48,51 @@ function CardsView() {
       </div>     
     </div>
     `;
-  }
+  };
+
+  const renderPins = () => {
+    if (pinnedCards.length != 0) {
+      return `
+      <div class="pin-section">
+        <h2 class="heading white">PINNED</h2>
+        <div class="card-container">
+          ${pinnedCards.map(renderCard).join("")}
+        </div>
+      </div>
+      `
+    } else return "";
+  };
+
+  const renderOthers = () => {
+    if (otherCards.length != 0) {
+      return `
+      <div class="pin-section">
+        <h2 class="heading white">OTHERS</h2>
+        <div class="card-container">
+          ${otherCards.map(renderCard).join("")}
+        </div>
+      </div>
+      `
+    } else return "";
+  };
 
   const template = `
-    ${Store.cards.map(renderCard).join("")}
+      ${renderPins()}
+      ${renderOthers()}
   `;
 
   const hideNotes = () => {
-    const cardContainer = document.querySelector(".card-container");
-    const cardx = cardContainer.querySelectorAll(".card__content");
-    if (cardx.length == 0) {
-      cardContainer.classList.add('center-vertically')
-      cardContainer.innerHTML = "<h1 class='white'>No notes to keep</h1>"
-      h1 = document.querySelector("h1")
-      h1.classList.add('heading', 'message')
+    const container = document.querySelector(".js-cards")
+    if (Store.cards.length == 0) {
+      container.classList.add('center-vertically', 'full-height-main')
+      container.innerHTML = "<h1 class='white heading message'>No notes to keep</h1>"
+    } else {
+      container.classList.remove('center-vertically', 'full-height-main')
     }
   }
 
   const listenPaletteCard = () => {
-    const cardContainer = document.querySelector(".card-container");
-    const paletteOpenerCards = cardContainer.querySelectorAll("#cardsPalette");
+    const paletteOpenerCards = document.querySelectorAll("#cardsPalette");
     const allPalettes = document.querySelectorAll(".palette__container");
     paletteOpenerCards.forEach((note) => {
 
@@ -113,6 +150,18 @@ function CardsView() {
     })
   };
 
+  const pinClick = () => {
+    const allPins = document.querySelectorAll("#js-pin");
+    allPins.forEach((Pin) => {
+      Pin.addEventListener("click", (event) => {
+        event.preventDefault();
+        const id = event.target.dataset.id;
+        Store.togglePin(id);
+        Cards.load(CardsView());
+      });
+    })
+  };
+
   return {
     toString() {
       return template
@@ -121,6 +170,7 @@ function CardsView() {
       listenPaletteCard();
       listenTrash();
       hideNotes();
+      pinClick();
     }
   }
 }
