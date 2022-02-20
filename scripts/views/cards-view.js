@@ -9,7 +9,7 @@ function CardsView() {
       <div class="card__icon">
         <div class="card__icon--custom">
           <section class="palette__container ds-none card-palette" data-id="${card.id}">
-            <div class="palette__color gray-border white-bg"></div>
+            <div class="palette__color white-bg gray-border"></div>
             <div class="palette__color red-100-bg"></div>
             <div class="palette__color yellow-200-bg"></div>
             <div class="palette__color yellow-100-bg"></div>
@@ -113,6 +113,30 @@ function CardsView() {
     })
   };
 
+  const listenPaletteEditForm = (cardToEd) => {
+    const formToEdit = document.querySelector("#form-to-edit");
+    const paletteOpener = formToEdit.querySelector("#formPalette");
+    const palette = formToEdit.querySelector(".palette__container");
+    paletteOpener.addEventListener("click", () =>
+      palette.classList.toggle("ds-none")
+    );
+  };
+
+  const colorSelectorEditForm = (cardToEd) => {
+    const formEd = document.querySelector("#form-to-edit");
+    const paletteEd = formEd.querySelector(".palette__container");
+    paletteEd.addEventListener("click", function (event) {
+      let target = event.target;
+      console.log(cardToEd.classList[1]);
+      if (target.tagName != 'DIV') return;
+      formEd.classList.remove(`${cardToEd.classList[1]}`);
+      formEd.classList.add(`${target.classList[1]}`);
+      paletteEd.classList.toggle("ds-none");
+    });
+  };
+
+
+
   let submitListener = (idToEdit, card) => {
     let formEdit = document.querySelector("#form-to-edit");
       formEdit.addEventListener("submit", (event) => {
@@ -121,11 +145,11 @@ function CardsView() {
         let editedCard = {
           title: title.value,
           description: description.value,
-          class: card.class,
         };
 
         console.log(formEdit.classList[0]);
-        Store.editCard(idToEdit, editedCard);
+        console.log(formEdit.classList[1]);
+        Store.editCard(idToEdit, editedCard, formEdit.classList[1]);
  
         Cards.load(CardsView());
         document.location.reload();
@@ -141,14 +165,15 @@ function CardsView() {
         let cardToEd = document.querySelector(`[data-id="${idCardToEd}"]`);
         let objCardToEdit = Store.cards.find((card) => card.id ==  idCardToEd);
         EditOverlay.load(EditView(objCardToEdit));
-        // let formEdit = document.querySelector("#form-to-edit");
-        // formEdit.classList.remove(`${formEdit.classList[1]}`)
-        // formEdit.classList.add(`${cardToEd.classList[1]}`);
-        // formEdit.classList.toggle("ds-none");
+
+        listenPaletteEditForm(cardToEd);
+        colorSelectorEditForm(cardToEd);
         submitListener(idCardToEd, objCardToEdit);
       });
     })
   };
+
+  
 
   return {
     toString() {
@@ -159,6 +184,7 @@ function CardsView() {
       listenTrash();
       hideNotes();
       listenEdit();
+
     }
   }
 }

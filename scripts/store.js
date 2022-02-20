@@ -61,11 +61,11 @@ const Store = (function () {
 
       localStorage.setItem("cards", JSON.stringify(this.cards));
     },
-    editCard(id, editedCard) {
+    editCard(id, editedCard, classFF) {
       let card = this.cards.find((card) => card.id == id);
       card.title = editedCard.title;
       card.description = editedCard.description;
-      card.class = editedCard.class;
+      card.class = classFF;
 
       localStorage.setItem("cards", JSON.stringify(this.cards));
     },

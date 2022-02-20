@@ -80,8 +80,8 @@ function EditView(card) {
       return template
     },
     addListeners() {
-      listenPaletteEditForm();
-      colorSelectorEditForm();
+      // listenPaletteEditForm();
+      // colorSelectorEditForm();
     }
   }
 }
