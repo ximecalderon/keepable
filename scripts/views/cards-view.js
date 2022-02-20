@@ -113,11 +113,29 @@ function CardsView() {
     })
   };
 
-  
+  let submitListener = (idToEdit) => {
+    let formEdit = document.querySelector("#form-to-edit");
+      formEdit.addEventListener("submit", (event) => {
+        event.preventDefault();
+        let { title, description } = event.target.elements;
+        let editedCard = {
+          title: title.value,
+          description: description.value,
+          class: formEdit.classList[0],
+        };
 
-  const listenEdit = () => {
-    const cardsContent = document.querySelectorAll(".card__text");
-    const formEdit = document.querySelector("#form-to-edit");
+        console.log(formEdit.classList[0]);
+        Store.editCard(idToEdit, editedCard);
+        cartas = CardsView();
+        Cards.load(cartas);
+        formEdit.classList.toggle("ds-none");
+      });
+    };
+
+  let listenEdit = () => {
+    let cardsContent = document.querySelectorAll(".card__text");
+    let formEdit = document.querySelector("#form-to-edit");
+    
     cardsContent.forEach((content) => {
       content.addEventListener("click", (event) => {
         let idCardToEd = event.target.dataset.id;
@@ -126,6 +144,7 @@ function CardsView() {
         formEdit.classList.add(`${cardToEd.classList[1]}`);
         console.log(cardToEd.classList[1]);
         formEdit.classList.toggle("ds-none");
+        submitListener(idCardToEd);
       });
     })
   };
