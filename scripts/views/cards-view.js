@@ -127,12 +127,10 @@ function CardsView() {
         console.log(formEdit.classList[0]);
         Store.editCard(idToEdit, editedCard);
  
-        // Sidebar.load(sidebarRender());
         Cards.load(CardsView());
+        document.location.reload();
 
-        formEdit.classList.toggle("ds-none");
-        // cartas = CardsView();
-        // let mainView = Layout();
+        // formEdit.classList.toggle("ds-none");
       });
     };
 
