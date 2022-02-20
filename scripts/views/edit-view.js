@@ -50,7 +50,9 @@ function EditView(card) {
 
   const template = `
   <div class="edit-bg">
-    ${renderForm()}
+    <div class="form-container">
+      ${renderForm()}
+    </div>
   </div>
   `;
 

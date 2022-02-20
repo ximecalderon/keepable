@@ -11,8 +11,27 @@
   z-index: 9;
 }
 
+.form-container {
+  position: absolute;
+  top: 70px;
+  left: 280px;
+  width: calc(100vw - 280px);
+  height: calc(100vh - 70px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .edit-form {
   position: fixed;
+  max-width: 600px;
   box-shadow: var(--shadow-white);
   z-index: 999;
+}
+
+@media (max-width: 880px) {
+  .form-container {
+    width: calc(100vw - 70px);
+    left: 70px;
+  }
 }
