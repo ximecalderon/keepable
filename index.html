@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="css/style.css" />
     <title>Keepable</title>
   </head>
-  <body>
+  <body id="body">
     <header class="header">
       <img
         class="logo-img"
@@ -64,9 +64,7 @@
                 class="center"
             /></a>
           </div>
-          <!-- <div> -->
           <button type="submit" class="button__custom inherit-bc">Keep it!</button>
-          <!-- </div> -->
         </div>
       </div>
     </form>
@@ -79,28 +77,50 @@
     <script src="scripts/views/form-view.js"></script>
     <script src="scripts/views/cards-view.js"></script>
     <script src="scripts/views/trash-view.js"></script>
-
+    
     <script src="scripts/index.js"></script>
+    <!-- <script src="scripts/views/edit-view.js"></script> -->
     <!-- <script>
-      const submitListener = () => {
-      const formEdit = document.querySelector("#form-to-edit");
-        formEdit.addEventListener("submit", (event) => {
-          event.preventDefault();
-          const { title, description } = event.target.elements;
-          const editedCard = {
-            title: title.value,
-            description: description.value,
-            class: formEdit.classList[0],
-          };
+  let submitListener = (idToEdit) => {
+    let formEdit = document.querySelector("#form-to-edit");
+      formEdit.addEventListener("submit", (event) => {
+        event.preventDefault();
+        let { title, description } = event.target.elements;
+        let editedCard = {
+          title: title.value,
+          description: description.value,
+          class: formEdit.classList[0],
+        };
 
-          console.log(formEdit.classList[0]);
-          Store.editCard(1, editedCard);
-          cartas = CardsView();
-          Cards.load(cartas);
-          formEdit.classList.toggle("ds-none");
-        });
-      };
-      submitListener();
+        console.log(formEdit.classList[0]);
+        Store.editCard(idToEdit, editedCard);
+        // App.load(Layout());
+        // Sidebar.load(sidebarRender());
+        Cards.load(CardsView());
+
+        formEdit.classList.toggle("ds-none");
+        // cartas = CardsView();
+        // let mainView = Layout();
+      });
+    };
+
+  let listenEdit = () => {
+    let cardsContent = document.querySelectorAll(".card__text");
+    let formEdit = document.querySelector("#form-to-edit");
+    
+    cardsContent.forEach((content) => {
+      content.addEventListener("click", (event) => {
+        let idCardToEd = event.target.dataset.id;
+        let cardToEd = document.querySelector(`[data-id="${idCardToEd}"]`);
+        formEdit.classList.remove(`${formEdit.classList[1]}`)
+        formEdit.classList.add(`${cardToEd.classList[1]}`);
+        console.log(cardToEd.classList[1]);
+        formEdit.classList.toggle("ds-none");
+        submitListener(idCardToEd);
+      });
+    })
+  };
+  listenEdit();
     </script> -->
   </body>
 </html>
