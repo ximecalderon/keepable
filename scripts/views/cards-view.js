@@ -177,36 +177,39 @@ function CardsView() {
 
   let submitListener = (idToEdit, card) => {
     let formEdit = document.querySelector("#form-to-edit");
-      formEdit.addEventListener("submit", (event) => {
-        event.preventDefault();
-        let { title, description } = event.target.elements;
-        let editedCard = {
-          title: title.value,
-          description: description.value,
-        };
+    formEdit.addEventListener("submit", (event) => {
+      event.preventDefault();
+      let { title, description } = event.target.elements;
+      let editedCard = {
+        title: title.value,
+        description: description.value,
+      };
 
-        console.log(formEdit.classList[0]);
-        console.log(formEdit.classList[1]);
-        Store.editCard(idToEdit, editedCard, formEdit.classList[1]);
- 
-        Cards.load(CardsView());
-        document.location.reload();
-      });
-    };
+      console.log(formEdit.classList[0]);
+      console.log(formEdit.classList[1]);
+      Store.editCard(idToEdit, editedCard, formEdit.classList[1]);
+
+      Cards.load(CardsView());
+      document.location.reload();
+    });
+  };
 
   let listenEdit = () => {
     let cardsContent = document.querySelectorAll(".card__text");
-    
+
     cardsContent.forEach((content) => {
       content.addEventListener("click", (event) => {
         let idCardToEd = event.target.dataset.id;
         let cardToEd = document.querySelector(`[data-id="${idCardToEd}"]`);
-        let objCardToEdit = Store.cards.find((card) => card.id ==  idCardToEd);
+        let objCardToEdit = Store.cards.find((card) => card.id == idCardToEd);
         EditOverlay.load(EditView(objCardToEdit));
 
         listenPaletteEditForm(cardToEd);
         colorSelectorEditForm(cardToEd);
         submitListener(idCardToEd, objCardToEdit);
+      })
+    })
+  };
 
   const pinClick = () => {
     const allPins = document.querySelectorAll("#js-pin");
