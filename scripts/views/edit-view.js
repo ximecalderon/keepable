@@ -36,7 +36,7 @@ function EditView(card) {
       
         <a href="#" class="form-to-white" id="formPalette"
           ><img
-            src="/assets/icons/palette.svg"
+            src="assets/icons/palette.svg"
             alt="icon-color"
             class="center"
         /></a>
