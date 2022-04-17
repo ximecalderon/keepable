@@ -1,7 +1,7 @@
 function EditView(card) {
   const renderForm = () => {
     return `
-    <form action="" class=" edit-form ${card.class}" id="form-to-edit">
+    <form action="" class="edit-form ${card.class}" id="form-to-edit">
     <div class="input__container padding">
       <div class="full-width">
         <input
@@ -56,11 +56,23 @@ function EditView(card) {
   </div>
   `;
 
+  const listenExitEdit = () => {
+    const outside = document.querySelector(".form-container");
+
+    outside.addEventListener("click", event => {
+      event.preventDefault();
+      if (event.target != outside) return;
+
+      EditOverlay.load("");
+    })
+  };
+
   return {
     toString() {
       return template
     },
     addListeners() {
+      listenExitEdit();
     }
   }
 }

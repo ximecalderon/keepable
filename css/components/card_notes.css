@@ -13,6 +13,7 @@
   display: flex;
   justify-content: space-between;
 }
+
 .card__text {
   width: 220px;
   display: flex;
@@ -49,6 +50,11 @@
   background-color: var(--gray-200);
 }
 
+.card__icon--custom:hover img,
+.card__icon--custom:active img {
+  filter: brightness(0) invert(1);
+}
+
 .form-to-white:hover,
 .form-to-white:active {
   filter: brightness(0) invert(1);
@@ -60,6 +66,22 @@
 
 .button__custom:hover {
   background-color: var(--gray-transparent);
+}
+
+.pin-button {
+  width: 36px;
+  height: 36px;
+  border-radius: 100%;
+  padding: 10px 12px;
+  background-color: var(--white-transparent);
+}
+
+.pin-button:hover {
+  background-color: var(--gray-transparent);
+}
+
+.pin-button:hover .active {
+  filter: brightness(0) invert(1);
 }
 
 /*INPUT*/

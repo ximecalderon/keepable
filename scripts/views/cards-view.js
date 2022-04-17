@@ -11,12 +11,14 @@ function CardsView() {
           <p data-id="${card.id}">${card.description}</p>
         </div>
         <a href="#" class="" data-id="${card.id}" id="js-pin"
-          ><img
-            src="assets/icons/pin_off.svg"
+          >
+          <div class="pin-button center">
+        <img
+            src="assets/icons/${card.pin ? `pin_on` : `pin_off`}.svg"
+            ${card.pin ? `class="active"` : ""}
             alt="icon-color"
-            class="center padding-9"
             data-id="${card.id}"
-        /></a>
+        /></div></a>
       </div>
       <div class="card__icon">
         <div class="card__icon--custom">
